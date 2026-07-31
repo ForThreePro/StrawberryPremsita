@@ -21,12 +21,12 @@ info: 'INFO',
 sticker: 'STICKER',
 }
 
-// Emojis random para que cambien cada.menu
-const EMOJIS_RANDOM = ['🔥','⚡','💥','🐉','🌟','💫','🌙','☄️','🌈','🍓','👑','💀','⚔️','🛡️','🌌']
+// Emojis fresita random
+const EMOJIS_RANDOM = ['🍓','🍒','🍰','🧁','🍬','🍭','🍡','🍧','🍨','🍩','🍪','🎀','💖','✨','🌸']
 
 let handler = async (m, { conn }) => {
 try {
-await conn.sendMessage(m.chat, { react: { text: '⚡', key: m.key } })
+await conn.sendMessage(m.chat, { react: { text: '🍓', key: m.key } })
 
 // Emojis random
 const eTop = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
@@ -59,16 +59,16 @@ for (const plugin of Object.values(global.plugins || {})) {
 }
 
 const userName = m.pushName || 'Usuario'
-const IMG_MENU = 'https://files.evogb.win/INtgbw.jpg'
+const IMG_MENU = 'https://files.evogb.win/We0JaW.jpg'
 
-let menuTexto = `*${eTop} SON GOKU PREM ${eTop}*
+let menuTexto = `*${eTop} STRAWBERRY PREM ${eTop}*
 
-⤷ *SYSTEM*: v3.0 DBZ
+⤷ *SYSTEM*: v3.0 FRESITA
 ╰─ *ONLINE* • ${horas}h ${minutos}m ${segundos}s
 
 ╭─「 ${eUser} USUARIO 」─╮
-│ 💀 @${userName}
-│ 💬 "Conectado. Listo para dominar"
+│ 🍓 ${userName}
+│ 💬 "Bienvenido al huerto de fresas"
 ╰────────────────╯
 
 ──${eStats} *ESTADISTICAS* ${eStats}──
@@ -103,6 +103,7 @@ for (const tag of Object.keys(CATEGORY_META)) {
   if(tag === 'ia') icono = '🤖'
   if(tag === 'info') icono = 'ℹ️'
   if(tag === 'sticker') icono = '🎨'
+  if(tag === 'joda') icono = '🍓'
 
   menuTexto += `\n╭─「 ${icono} ${CATEGORY_META[tag]} 」─╮\n`
   menuTexto += cmds.map(c => `│ *${icono}.${c}*`).join('\n') + '\n'
@@ -111,12 +112,12 @@ for (const tag of Object.keys(CATEGORY_META)) {
 
 menuTexto += `
 *━━━━━━━━━━━━━━*
-*BOT*: SON GOKU PREM
+*BOT*: STRAWBERRY PREM
 *CREADOR*: Whois Yalli co
-*VERSION*: 3.0 DBZ Masculino
+*VERSION*: 3.0 FRESITA
 *WEB*: github.com
 
-> "Conectado al sistema. Domina o muere" ${eTop}
+> "Dulce pero peligroso" ${eTop}
 *━━━━━━━━━━━━━━*`
 
 await conn.sendMessage(m.chat, {
@@ -126,12 +127,12 @@ await conn.sendMessage(m.chat, {
 }, { quoted: m })
 
 } catch (e) {
-await conn.sendMessage(m.chat, { text: `*❌ SYSTEM ERROR*: ${e.message}` }, { quoted: m })
+await conn.sendMessage(m.chat, { text: `*🍓 ERROR DE SISTEMA 🍓*\n*Detalle*: ${e.message}` }, { quoted: m })
 }
 }
 
 handler.help = ['menu']
 handler.tags = ['info']
-handler.command = ['menu', 'help', 'menudbz']
+handler.command = ['menu', 'help', 'menufresa']
 
 export default handler
