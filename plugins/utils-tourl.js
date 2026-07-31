@@ -5,13 +5,14 @@ import { fileTypeFromBuffer } from "file-type"
 let handler = async (m, { conn }) => {
   let q = m.quoted ? m.quoted : m
   let mime = (q.msg || q).mimetype || ''
-  if (!mime) return conn.reply(m.chat, `*❌ ERROR DE SISTEMA ❌*
-*━━━━━━━━━━━━━━━*
+  if (!mime) return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 🐉 CAPSULA 」─╮
+*❌ ERROR ❌*
+
+╭─「 INSTRUCCION 」─╮
 │ *Responde a un archivo valido*
 │ *Formatos*: Imagen, Video, Audio, Doc
-╰─────────────────╯`, m)
+╰──────────────────╯`, m)
 
   try {
     await conn.sendMessage(m.chat, { react: { text: '⏳', key: m.key } })
@@ -21,32 +22,31 @@ let handler = async (m, { conn }) => {
 
     if (!link.success) throw new Error()
 
-    let txt = `*🌟 ARCHIVO SUBIDO A LA NUBE 🌟*
-*━━━━━━━━━━━━━━━*
+    let txt = `*🍓 ARCHIVO SUBIDO 🍓*
 
-╭─「 ⚡ REPORTE 」─╮
-│ *🔗 ENLACE*: ${link.url}
-│ *🆔 ID*: ${link.id}
-│ *📊 TAMAÑO*: ${formatBytes(media.length)}
-│ *🛡️ SERVIDOR*: evogb.win
-│ *🐉 ESTADO*: Almacenado en Capsula
-╰─────────────────╯
+╭─「 REPORTE 」─╮
+│ *ENLACE*: ${link.url}
+│ *ID*: ${link.id}
+│ *TAMAÑO*: ${formatBytes(media.length)}
+│ *SERVIDOR*: evogb.win
+│ *ESTADO*: Subido
+╰──────────────╯
 
-> *"El archivo fue teletransportado a la nube"*`
+> *"El archivo fue subido a la nube"*`
 
     await conn.sendFile(m.chat, media, 'file.' + link.url.split('.').pop(), txt, m)
     await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } })
   } catch (e) {
     console.error(e)
     await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-    await conn.reply(m.chat, `*❌ ERROR DE SUBIDA ❌*
-*━━━━━━━━━━━━━━━*
+    await conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 💥 FALLO 」─╮
+*❌ ERROR DE SUBIDA ❌*
+
+╭─「 FALLO 」─╮
 │ *No se pudo subir el archivo*
-│ *El ki del servidor fallo*
 │ *Intenta de nuevo en unos seg*
-╰───────────────╯`, m)
+╰─────────────╯`, m)
   }
 }
 
