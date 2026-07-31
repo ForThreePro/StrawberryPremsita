@@ -5,28 +5,27 @@ let handler = async (m, { conn, text, isAdmin }) => {
 │ *Solo admins pueden cambiar el mensaje*
 ╰─────────────────🐉`);
 
-  let chat = global.db.data.chats[m.chat];
+  let chat = global.db.data.chats[m.chat]
+  if (!chat) global.db.data.chats[m.chat] = {}
+  chat = global.db.data.chats[m.chat]
 
-  if (!text) {
-    chat.byeText = null;
-    return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
-│ ✅ *DESPEDIDA RESTAURADA*
+  if (!text) return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
+│ ⚠️ *FALTA TEXTO*
 │
-│ *Volvio al mensaje DBZ por defecto*
-│ *Usa.setbye <texto> para personalizar*
+│ *Ejemplo:*.setbye @name abandono @group
+│ *Variables:* @user @name @group %users @action @date
 ╰─────────────────🐉`);
-  }
 
   chat.byeText = text;
+  await global.db.write()
   m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
-│ 💀 *MENSAJE DE DESPEDIDA GUARDADO*
+│ 💀 *DESPEDIDA GUARDADA*
 ╰─────────────────🐉
 
 ╭─「 𝗣𝗥𝗘𝗩𝗜𝗦𝗨𝗔𝗟𝗜𝗭𝗔𝗖𝗜𝗢𝗡 」─🐉─╮
 │ ${text}
 ╰─────────────────🐉
 
-*Variables:* @user @name @group %users @action @date
 > *"Otro guerrero ha caido"*`);
 }
 
