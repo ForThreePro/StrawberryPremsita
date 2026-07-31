@@ -30,51 +30,42 @@ handler.before = async function (m, { conn }) {
         }
     }
 
-    // 1. FOTO DEL USER > 2. FOTO DEL GRUPO > 3. DEFAULT
-    let banner;
-    try {
-        banner = await conn.profilePictureUrl(userss, 'image')
-    } catch {
-        try {
-            banner = await conn.profilePictureUrl(m.chat, 'image')
-        } catch {
-            banner = 'https://i.imgur.com/2wzZ3eB.png'
-        }
-    }
+    // IMAGEN DBZ FIJA
+    let banner = 'https://files.evogb.win/INtgbw.jpg'
 
-    // DISEÑO CYBER PROMOTE
+    // DISEÑO DBZ PROMOTE
     const admingp = `
-╔═══「 👑 𝐀𝐒𝐂𝐄𝐍𝐒𝐎 」═══╗
+╔═══「 🔥 𝐓𝐑𝐀𝐍𝐒𝐅𝐎𝐑𝐌𝐀𝐂𝐈𝐎𝐍 」═══╗
 ║
-║ 𝗧𝗔𝗥𝗚𝗘𝗧 : ${userTag}
-║ 𝗦𝗧𝗔𝗧𝗨𝗦 : ✅ RANGO ASIGNADO
-║ 𝗕𝗬 : ${adminTag}
+║ 𝗚𝗨𝗘𝗥𝗥𝗘𝗥𝗢 : ${userTag}
+║ 𝗘𝗦𝗧𝗔𝗗𝗢 : ⚡ SUPER SAIYAJIN
+║ 𝗢𝗧𝗢𝗥𝗚𝗔𝗗𝗢 𝗣𝗢𝗥 : ${adminTag}
 ║
-╠═══「 𝗣𝗘𝗥𝗠𝗜𝗦𝗢𝗦 」═══╣
+╠═══「 𝗣𝗢𝗗𝗘𝗥𝗘𝗦 𝗗𝗘𝗦𝗕𝗟𝗢𝗤𝗨𝗘𝗔𝗗𝗢𝗦 」═══╣
 ║ [✓] Expulsar / Promover
 ║ [✓] Editar Info Grupo
 ║ [✓] Cambiar Config
-║ [✓] Anuncios
-╚═══════════╝
+║ [✓] Modo Anuncios
+╚══════════════════════╝
 
-> 𝙴𝚕 𝚙𝚘𝚍𝚎𝚛 𝚌𝚘𝚗𝚕𝚎𝚟𝚊 𝚛𝚎𝚜𝚙𝚘𝚗𝚜𝚊𝚋𝚒𝚕𝚒𝚍𝚊𝚍
+> 𝙲𝚘𝚗 𝚐𝚛𝚊𝚗 𝚙𝚘𝚍𝚎𝚛 𝚟𝚒𝚎𝚗𝚎 𝚐𝚛𝚊𝚗 𝚛𝚎𝚜𝚙𝚘𝚗𝚜𝚊𝚋𝚒𝚕𝚒𝚍𝚊𝚍 💥
 `.trim()
 
-    // DISEÑO CYBER DEMOTE
+    // DISEÑO DBZ DEMOTE
     const noadmingp = `
-╔═══「 🔒 𝐃𝐄𝐒𝐂𝐄𝐍𝐒𝐎 」═══╗
+╔═══「 ❄️ 𝐏𝐎𝐃𝐄𝐑 𝐑𝐄𝐕𝐎𝐂𝐀𝐃𝐎 」═══╗
 ║
-║ 𝗧𝗔𝗥𝗚𝗘𝗧 : ${userTag}
-║ 𝗦𝗧𝗔𝗧𝗨𝗦 : ❌ RANGO REVOCADO
-║ 𝗕𝗬 : ${adminTag}
+║ 𝗚𝗨𝗘𝗥𝗥𝗘𝗥𝗢 : ${userTag}
+║ 𝗘𝗦𝗧𝗔𝗗𝗢 : 🔒 RANGO REVOCADO
+║ 𝗣𝗢𝗥 : ${adminTag}
 ║
-╠═══「 𝗔𝗖𝗘𝗦𝗢 𝗗𝗘𝗡𝗘𝗚𝗔𝗗𝗢 」═══╣
+╠═══「 𝗔𝗖𝗘𝗦𝗢 𝗕𝗟𝗢𝗤𝗨𝗘𝗔𝗗𝗢 」═══╣
 ║ [✗] Sin permisos de admin
 ║ [✗] Comandos bloqueados
-║ [✗] Solo miembro
-╚═════════╝
+║ [✗] Nivel: Guerrero Z
+╚══════════════╝
 
-> 𝚂𝚒𝚗 𝚛𝚊𝚗𝚐𝚘, 𝚜𝚒𝚗 𝚙𝚘𝚍𝚎𝚛
+> 𝚂𝚒𝚗 𝚊𝚞𝚛𝚊, 𝚜𝚒𝚗 𝚙𝚘𝚍𝚎𝚛 ⚡
 `.trim()
 
     // LIMPIAR SESSION SI KICKEAN BOT
@@ -95,7 +86,7 @@ handler.before = async function (m, { conn }) {
         await conn.sendMessage(m.chat, {
             image: { url: banner },
             caption: admingp,
-       ...context
+      ...context
         }, { quoted: null })
         return
     }
@@ -105,7 +96,7 @@ handler.before = async function (m, { conn }) {
         await conn.sendMessage(m.chat, {
             image: { url: banner },
             caption: noadmingp,
-       ...context
+      ...context
         }, { quoted: null })
         return
     }
