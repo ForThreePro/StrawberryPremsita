@@ -19,34 +19,59 @@ export async function before(m, { conn, participants, groupMetadata }) {
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) memberCount++;
     if ([WAMessageStubType.GROUP_PARTICIPANT_REMOVE, WAMessageStubType.GROUP_PARTICIPANT_LEAVE].includes(m.messageStubType)) memberCount--;
 
-    const EMOJIS = ['🔥','⚡','💥','🐉','🌟','💫','🌙','☄️','🌈','👑','💀','⚔️','🛡️']
+    const EMOJIS = ['🍓','🍒','🍰','🧁','🍬','🍭','🍡','🍧','🍨','🍩','🎀','💖','✨']
     const e1 = EMOJIS[Math.floor(Math.random() * EMOJIS.length)]
     const e2 = EMOJIS[Math.floor(Math.random() * EMOJIS.length)]
 
     const actionText = {
-        [WAMessageStubType.GROUP_PARTICIPANT_ADD]: actor? `*Reclutado por* @${actor.split('@')[0]}` : '*Ingreso al sistema*',
-        [WAMessageStubType.GROUP_PARTICIPANT_REMOVE]: actor? `*Eliminado por* @${actor.split('@')[0]}` : '*Expulsado del sistema*',
-        [WAMessageStubType.GROUP_PARTICIPANT_LEAVE]: '*Abandono el sistema*'
+        [WAMessageStubType.GROUP_PARTICIPANT_ADD]: actor? `*Reclutado por* @${actor.split('@')[0]}` : '*Ingreso al huerto*',
+        [WAMessageStubType.GROUP_PARTICIPANT_REMOVE]: actor? `*Eliminado por* @${actor.split('@')[0]}` : '*Expulsado del huerto*',
+        [WAMessageStubType.GROUP_PARTICIPANT_LEAVE]: '*Abandono el huerto*'
     };
 
     const format = (text) => {
         return text
-       .replace(/@user/g, `@${target.split('@')[0]}`)
-       .replace(/@name/g, targetName)
-       .replace(/@group/g, groupMetadata.subject)
-       .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
-       .replace(/%users/g, memberCount)
-       .replace(/@action/g, actionText[m.messageStubType] || '')
-       .replace(/@date/g, new Date().toLocaleString('es-PE'));
+      .replace(/@user/g, `@${target.split('@')[0]}`)
+      .replace(/@name/g, targetName)
+      .replace(/@group/g, groupMetadata.subject)
+      .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
+      .replace(/%users/g, memberCount)
+      .replace(/@action/g, actionText[m.messageStubType] || '')
+      .replace(/@date/g, new Date().toLocaleString('es-PE'));
     };
 
     let ppUrl;
     try { ppUrl = await conn.profilePictureUrl(target, 'image'); }
     catch { ppUrl = 'https://files.evogb.win/INtgbw.jpg' }
 
-    const defaultWelcome = `*${e1} NUEVO GUERRERO DETECTADO ${e1}*\n*━━━━━━━━*\n\n*ID*: @name\n*GRUPO*: @group\n*ESTADO*: @action\n╭─「 ${e2} INFO DEL SISTEMA 」─╮\n│ *📜 Desc*: @desc\n│ *👥 Miembros*: %users\n│ *⚠️ Aviso*: Lee las reglas o ban\n╰───────────────────────╯\n\n> "Bienvenido a la red. No la cagues" ${e1}`;
+    const defaultWelcome = `*${e1} NUEVA FRESITA LLEGO ${e1}*
+*━━━━━━━━*
 
-    const defaultBye = `*${e1} GUERRERO DADO DE BAJA ${e1}*\n*━━━━━━━━*\n\n*ID*: @name\n*GRUPO*: @group\n\n*ESTADO*: @action\n\n╭─「 ${e2} REPORTE 」─╮\n│ *👥 Miembros Actuales*: %users\n│ *🕐 Salida*: @date\n╰────────────────╯\n\n> "Un soldado menos. El sistema sigue" ${e1}`;
+*ID*: @name
+*GRUPO*: @group
+*ESTADO*: @action
+╭─「 ${e2} INFO 」─╮
+│ *📜 Descripcion*: @desc
+│ *👥 Miembros*: %users
+│ *⚠️ Aviso*: Lee las reglas
+╰─────────────────╯
+
+> "Bienvenido al huerto. Comportate" ${e1}`;
+
+    const defaultBye = `*${e1} FRESITA SE FUE ${e1}*
+*━━━━━━━━*
+
+*ID*: @name
+*GRUPO*: @group
+
+*ESTADO*: @action
+
+╭─「 ${e2} REPORTE 」─╮
+│ *👥 Miembros Actuales*: %users
+│ *🕐 Salida*: @date
+╰─────────────────╯
+
+> "Se nos fue una fresita. Sigue el huerto" ${e1}`;
 
     const welcome = format(chat.welcomeText || defaultWelcome);
     const bye = format(chat.byeText || defaultBye);
@@ -63,7 +88,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
                 audio: audioBuffer,
                 mimetype: 'audio/mpeg', // MP3
                 ptt: false, // MANUAL - CLAVE PARA QUE NO LO SILENCIE
-                fileName: 'Son_Goku_Prem.mp3'
+                fileName: 'StrawBerry_Prem.mp3'
             })
         } catch(e) {
             console.log('Error al enviar audio:', e)
