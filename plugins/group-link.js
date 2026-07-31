@@ -5,8 +5,9 @@ let linkRegex = /https:\/\/chat\.whatsapp\.com\/([0-9A-Za-z]{20,24})/i;
 let handler = async (m, { conn, text, isOwner }) => {
   const botname = getBotConfig(conn, 'botname')
 
-    if (!text) return m.reply(`*⚡ ERROR DE SISTEMA ⚡*
-*━━━━━━━━*
+    if (!text) return m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ ERROR DE SISTEMA ⚠️*
 
 ╭─「 INSTRUCCION 」─╮
 │ *Debes enviar una invitacion para que*
@@ -15,8 +16,9 @@ let handler = async (m, { conn, text, isOwner }) => {
 
     let [_, code] = text.match(linkRegex) || [];
 
-    if (!code) return m.reply(`*❌ ERROR DE SISTEMA ❌*
-*━━━━━━━━*
+    if (!code) return m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*❌ ERROR ❌*
 
 ╭─「 VALIDACION 」─╮
 │ *Enlace de invitacion no valido*
@@ -24,29 +26,27 @@ let handler = async (m, { conn, text, isOwner }) => {
 
     if (isOwner) {
         await conn.groupAcceptInvite(code)
-            .then(res => m.reply(`*✅ ACCESO CONCEDIDO ✅*
-*━━━━━━━━*
+            .then(res => m.reply(`*🍓 ACCESO CONCEDIDO 🍓*
 
 ╭─「 REPORTE 」─╮
 │ *Me he unido exitosamente al grupo*
 ╰───────────────╯`))
-            .catch(err => m.reply(`*❌ ERROR CRITICO ❌*
-*━━━━━━━━*
+            .catch(err => m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*❌ ERROR CRITICO ❌*
 
 ╭─「 DETALLE 」─╮
 │ *Error al unirme al grupo*
 ╰───────────────╯`));
     } else {
-        let message = `*📨 SOLICITUD DE INGRESO 📨*
-*━━━━━━━━*
+        let message = `*🍓 SOLICITUD DE INGRESO 🍓*
 
 ╭─「 DETALLE 」─╮
 │ *ENLACE*: ${text}
 │ *POR*: @${m.sender.split('@')[0]}
 ╰─────────────────╯`;
         await conn.sendMessage(`${global.owner[0][0]}` + '@s.whatsapp.net', { text: message, mentions: [m.sender] }, { quoted: m });
-        m.reply(`*📤 SOLICITUD ENVIADA 📤*
-*━━━━━━━━*
+        m.reply(`*🍓 SOLICITUD ENVIADA 🍓*
 
 ╭─「 ESTADO 」─╮
 │ *El link del grupo ha sido enviado*
