@@ -12,27 +12,27 @@ let handler = async (m, { conn, args, command, isOwner }) => {
   try {
     pp = await conn.profilePictureUrl(m.chat, 'image');
   } catch {
-    pp = 'https://i.imgur.com/2wzZ3eB.png'; // default si no hay foto
+    pp = 'https://files.evogb.win/INtgbw.jpg'; // default si no hay foto
   }
 
   const configList = `
-╭─❒ 「 ⚙️ CONFIGURACION 」 ❒─╮
+*╭─「 🐉 PANEL DE CONTROL 」─╮*
 │
-│ ${chatData.welcome? on : off} Bienvenida
-│ ${chatData.antiLink? on : off} AntiLink
-│ ${chatData.economy? on : off} Economia
-│ ${chatData.gacha? on : off} Gacha
-│ ${chatData.adminonly? on : off} Modo Admin
-│ ${chatData.reaction? on : off} Reacciones
-│ ${chatData.nsfw? on : off} NSFW
-│ ${chatData.alerts? on : off} Alertas
-│ ${chatData.notprefix? on : off} Sin Prefijo
-│ ${botSettings?.jadibotmd? on : off} SubBots
+│ *${chatData.welcome? on : off} Bienvenida*
+│ *${chatData.antiLink? on : off} Anti Enlaces*
+│ *${chatData.economy? on : off} Economia Zeni*
+│ *${chatData.gacha? on : off} Capsulas Gacha*
+│ *${chatData.adminonly? on : off} Modo Dios*
+│ *${chatData.reaction? on : off} Reacciones Ki*
+│ *${chatData.nsfw? on : off} NSFW*
+│ *${chatData.alerts? on : off} Alerta Peligro*
+│ *${chatData.notprefix? on : off} Sin Prefijo*
+│ *${botSettings?.jadibotmd? on : off} SubBots*
 │
-├─❒ 「 📝 USO 」 ❒─
-│.${command} welcome on/off
-│.${command} antilink on/off
-╰───────────❒`.trim();
+*├─「 ⚡ USO 」─*
+│ *.${command} welcome on/off*
+│ *.${command} antilink on/off*
+*╰─────────────╯*`.trim();
 
   if (!setting) {
     return conn.sendMessage(m.chat, {
@@ -46,12 +46,13 @@ let handler = async (m, { conn, args, command, isOwner }) => {
   const reply = (name) => conn.sendMessage(m.chat, {
     image: { url: pp },
     caption: `
-╭─❒ 「 ⚙️ ACTUALIZADO 」 ❒─╮
+*╭─「 🌟 SISTEMA ACTUALIZADO 」─╮*
 │
-│ 📌 Función: ${name}
-│ 📊 Estado: ${status? '✅ ACTIVADO' : '❌ DESACTIVADO'}
+│ *📌 FUNCION*: ${name}
+│ *📊 ESTADO*: ${status? '✅ ACTIVADO' : '❌ DESACTIVADO'}
+│ *⚡ KI*: ${status? 'Nivel Super Saiyajin' : 'Nivel Base'}
 │
-╰───────────❒`.trim(),
+*╰─────────────╯*`.trim(),
     mentions: [m.sender]
   }, { quoted: m });
 
@@ -60,13 +61,13 @@ let handler = async (m, { conn, args, command, isOwner }) => {
       chatData.antiLink = status; reply('Anti Enlaces'); break;
 
     case 'rpg': case 'economia':
-      chatData.rpg = status; chatData.economy = status; reply('Economia'); break;
+      chatData.rpg = status; chatData.economy = status; reply('Economia Zeni'); break;
 
     case 'gacha':
-      chatData.gacha = status; reply('Gacha'); break;
+      chatData.gacha = status; reply('Capsulas Gacha'); break;
 
     case 'modoadmin': case 'adminonly': case 'onlyadmin':
-      chatData.adminonly = status; reply('Modo Admin'); break;
+      chatData.adminonly = status; reply('Modo Dios'); break;
 
     case 'nsfw':
       chatData.nsfw = status; reply('NSFW'); break;
@@ -75,23 +76,23 @@ let handler = async (m, { conn, args, command, isOwner }) => {
       chatData.welcome = status; reply('Bienvenida'); break;
 
     case 'reaccion': case 'reaction':
-      chatData.reaction = status; reply('Reacciones'); break;
+      chatData.reaction = status; reply('Reacciones Ki'); break;
 
     case 'alerts': case 'alertas':
-      chatData.alerts = status; reply('Alertas'); break;
+      chatData.alerts = status; reply('Alerta Peligro'); break;
 
     case 'notprefix': case 'noprefix': case 'sinprefijo':
       chatData.notprefix = status; reply('Sin Prefijo'); break;
 
     case 'serbot': case 'jadibot': case 'subbots':
-      if (!isOwner) return m.reply(`╭─❒ 「 ⛔ ERROR 」 ❒─╮\n│\n│ Solo el Owner puede usar esto\n│\n╰───────────❒`);
+      if (!isOwner) return m.reply(`*╭─「 ⛔ ACCESO DENEGADO 」─╮*\n│\n│ *Solo el Maestro puede usar esto*\n│ *Tu ki no es suficiente*\n│\n*╰─────────────╯*`);
       if (botSettings) { botSettings.jadibotmd = status; reply('SubBots'); }
       break;
 
     default:
       return conn.sendMessage(m.chat, {
         image: { url: pp },
-        caption: `╭─❒ 「 ⚠️ ERROR 」 ❒─╮\n│\n│ Opción no válida\n│\n╰───────────❒\n\n${configList}`,
+        caption: `*╭─「 ⚠️ ERROR 」─╮*\n│\n│ *Opcion no valida*\n│ *Revisa el Panel de Control*\n│\n*╰─────────────╯*\n\n${configList}`,
         mentions: [m.sender]
       }, { quoted: m });
   }
