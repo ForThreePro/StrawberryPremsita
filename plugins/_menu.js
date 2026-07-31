@@ -1,4 +1,3 @@
-
 import moment from 'moment-timezone'
 import os from 'os'
 moment.locale('es') // fecha en español
@@ -29,12 +28,11 @@ let handler = async (m, { conn }) => {
 try {
 await conn.sendMessage(m.chat, { react: { text: '⚡', key: m.key } })
 
-// Agarrar emojis random para las secciones
-const e1 = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
-const e2 = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
-const e3 = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
-const e4 = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
-const e5 = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
+// Emojis random
+const eTop = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
+const eUser = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
+const eStats = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
+const eSys = EMOJIS_RANDOM[Math.floor(Math.random() * EMOJIS_RANDOM.length)]
 
 const fecha = moment.tz('America/Lima').format('dddd')
 const fecha2 = moment.tz('America/Lima').format('DD [de] MMMM [de] YYYY')
@@ -63,22 +61,23 @@ for (const plugin of Object.values(global.plugins || {})) {
 const userName = m.pushName || 'Usuario'
 const IMG_MENU = 'https://files.evogb.win/INtgbw.jpg'
 
-let menuTexto = `*${e1} SON GOKU PREM ${e1}*
+let menuTexto = `*${eTop} SON GOKU PREM ${eTop}*
 
 ⤷ *SYSTEM*: v3.0 DBZ
-*ONLINE*: ${horas}h ${minutos}m ${segundos}s
+╰─ *ONLINE* • ${horas}h ${minutos}m ${segundos}s
 
-*${e2} USUARIO ${e2}*
-*Nombre*: @${userName}
-*Estado*: "Conectado. Listo para dominar"
+╭─「 ${eUser} USUARIO 」─╮
+│ 💀 @${userName}
+│ 💬 "Conectado. Listo para dominar"
+╰────────────────╯
 
-*${e3} ESTADISTICAS ${e3}*
+──${eStats} *ESTADISTICAS* ${eStats}──
 *👥 Usuarios*: ${totalUsers}
 *📜 Comandos*: ${pluginsCount}
 *💾 RAM*: ${ram}mb
 *🌐 Servidor*: ${totalram}gb
 
-*${e4} SISTEMA ${e4}*
+──${eSys} *SISTEMA* ${eSys}──
 *📅 Dia*: ${fecha}
 *📆 Fecha*: ${fecha2}
 *🕐 Hora*: ${hora}
@@ -91,7 +90,7 @@ for (const tag of Object.keys(CATEGORY_META)) {
   if (!set || set.size === 0) continue
   const cmds = [...set].sort()
 
-  let icono = e5 // emoji random para cada categoria
+  let icono = '🔧'
   if(tag === 'config') icono = '⚙️'
   if(tag === 'owner') icono = '👑'
   if(tag === 'fun') icono = '😈'
@@ -105,19 +104,20 @@ for (const tag of Object.keys(CATEGORY_META)) {
   if(tag === 'info') icono = 'ℹ️'
   if(tag === 'sticker') icono = '🎨'
 
-  menuTexto += `\n*${icono} ${CATEGORY_META[tag]} ${icono}*\n`
-  menuTexto += cmds.map(c => `*${icono}.${c}*`).join('\n') + '\n'
+  menuTexto += `\n╭─「 ${icono} ${CATEGORY_META[tag]} 」─╮\n`
+  menuTexto += cmds.map(c => `│ *${icono}.${c}*`).join('\n') + '\n'
+  menuTexto += `╰─────────────────╯\n`
 }
 
 menuTexto += `
-*━━━━━━━━*
+*━━━━━━━━━━━━━━*
 *BOT*: SON GOKU PREM
 *CREADOR*: Whois Yalli co
 *VERSION*: 3.0 DBZ Masculino
 *WEB*: github.com
 
-> "Conectado al sistema. Domina o muere" ${e1}
-*━━━━━━━━*`
+> "Conectado al sistema. Domina o muere" ${eTop}
+*━━━━━━━━━━━━━━*`
 
 await conn.sendMessage(m.chat, {
   image: { url: IMG_MENU },
