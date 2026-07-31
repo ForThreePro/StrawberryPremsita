@@ -1,37 +1,39 @@
 let handler = async (m, { conn, text, isAdmin, isOwner, command }) => {
-    if (!m.isGroup) return m.reply(`*🔥 ERROR DE SISTEMA 🔥*
-*━━━━━━━━━━━━━━━*
+    if (!m.isGroup) return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 🐉 ACCESO 」─╮
+*⚠️ ACCESO ⚠️*
+
+╭─「 GRUPO 」─╮
 │ *Este comando solo en grupos*
-│ *No funciona en el plano privado*
-╰─────────────────╯`)
+│ *No funciona en privado*
+╰─────────────╯`)
 
-    if (!isAdmin &&!isOwner) return m.reply(`*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━━━━━━━━*
+    if (!isAdmin &&!isOwner) return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 ⚡ PERMISOS KI 」─╮
+*⛔ ACCESO DENEGADO ⛔*
+
+╭─「 PERMISOS 」─╮
 │ *Solo administradores del grupo*
-│ *Necesitas rango de guardian*
-╰────────────────────╯`)
+╰────────────────╯`)
 
     let mentioned = await m.mentionedJid
     let who = mentioned.length > 0
-      ? mentioned[0]
+     ? mentioned[0]
         : m.quoted
-      ? m.quoted.sender
+     ? m.quoted.sender
         : text
-      ? text.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
+     ? text.replace(/[^0-9]/g, '') + '@s.whatsapp.net'
         : false
 
     if (!who) {
-        return m.reply(`*💥 ERROR DE SISTEMA 💥*
-*━━━━━━━━━━━━━━━*
+        return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 🐉 INSTRUCCION 」─╮
+*⚠️ ERROR ⚠️*
+
+╭─「 INSTRUCCION 」─╮
 │ *Etiqueta o cita al usuario*
 │ *Ejemplo*:.mute @usuario
-╰────────────────────╯`)
+╰─────────────────╯`)
     }
 
     const groupInfo = await conn.groupMetadata(m.chat)
@@ -41,13 +43,13 @@ let handler = async (m, { conn, text, isAdmin, isOwner, command }) => {
     const targetName = global.db.data.users[who]?.name || await conn.getName(who)
 
     if (who === conn.user.jid || who === ownerGroup || who === ownerBot || protectedOwners.includes(who)) {
-        return m.reply(`*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━━━━━━━━*
+        return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 🛡️ BARRERA DIVINA 」─╮
-│ *No se puede silenciar al Maestro*
-│ *El ki del owner es muy poderoso*
-╰───────────────────────╯`)
+*⛔ ACCESO DENEGADO ⛔*
+
+╭─「 SEGURIDAD 」─╮
+│ *No se puede silenciar al owner*
+╰─────────────────╯`)
     }
 
     let chat = global.db.data.chats[m.chat]
@@ -55,57 +57,57 @@ let handler = async (m, { conn, text, isAdmin, isOwner, command }) => {
 
     if (/^(mute|silenciar)$/i.test(command)) {
         if (chat.mutedUsers.includes(who)) {
-            return m.reply(`*⚠️ AVISO DEL SISTEMA ⚠️*
-*━━━━━━━━━━━━━━━*
+            return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 🐉 ESTADO 」─╮
-│ *${targetName} ya esta en la Habitacion del Tiempo*
-│ *No puede hablar desde ahi*
-╰───────────────╯`)
+*⚠️ AVISO ⚠️*
+
+╭─「 ESTADO 」─╮
+│ *${targetName} ya esta silenciado*
+│ *No puede hablar*
+╰──────────────╯`)
         }
 
         chat.mutedUsers.push(who)
 
         await conn.reply(
             m.chat,
-            `*🔇 USUARIO SILENCIADO 🔇*
-*━━━━━━━━━━━━━━━*
+            `*🍓 USUARIO SILENCIADO 🍓*
 
-╭─「 ⚡ REPORTE 」─╮
+╭─「 REPORTE 」─╮
 │ *USUARIO*: ${targetName}
-│ *ESTADO*: Encerrado en la Habitacion del Tiempo
+│ *ESTADO*: Silenciado
 │ *POR*: @${m.sender.split('@')[0]}
-╰───────────────╯
+╰──────────────╯
 
-> "Su voz fue sellada. Nadie lo escuchara"`,
+> "Se le quito la voz en el huerto"`,
             m,
             { mentions: [who, m.sender] }
         )
     } else {
         if (!chat.mutedUsers.includes(who)) {
-            return m.reply(`*⚠️ AVISO DEL SISTEMA ⚠️*
-*━━━━━━━━━━━━━━━*
+            return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 🐉 ESTADO 」─╮
+*⚠️ AVISO ⚠️*
+
+╭─「 ESTADO 」─╮
 │ *${targetName} no esta silenciado*
-│ *Aun puede hablar libremente*
-╰───────────────╯`)
+│ *Puede hablar libremente*
+╰──────────────╯`)
         }
 
         chat.mutedUsers = chat.mutedUsers.filter(u => u!== who)
 
         await conn.reply(
             m.chat,
-            `*🔊 USUARIO LIBERADO 🔊*
-*━━━━━━━━━━━━━━━*
+            `*🍓 USUARIO LIBERADO 🍓*
 
-╭─「 ⚡ REPORTE 」─╮
+╭─「 REPORTE 」─╮
 │ *USUARIO*: ${targetName}
-│ *ESTADO*: Liberado de la Habitacion del Tiempo
+│ *ESTADO*: Puede hablar
 │ *POR*: @${m.sender.split('@')[0]}
-╰───────────────╯
+╰──────────────╯
 
-> "Su voz ha sido restaurada"`,
+> "Su voz fue restaurada en el huerto"`,
             m,
             { mentions: [who, m.sender] }
         )
@@ -120,7 +122,7 @@ handler.before = async function (m, { conn, chat, isBotAdmin }) {
     if (chat.mutedUsers.includes(m.sender)) {
         try {
             await conn.sendMessage(m.chat, { delete: m.key })
-            await conn.sendMessage(m.chat, { react: { text: '🔇', key: m.key } })
+            await conn.sendMessage(m.chat, { react: { text: '🍓', key: m.key } })
         } catch (e) {
             console.error(e)
         }
@@ -131,7 +133,7 @@ handler.before = async function (m, { conn, chat, isBotAdmin }) {
 }
 
 handler.help = ['mute @user', 'unmute @user']
-handler.tags = ['grupo']
+handler.tags = ['group']
 handler.command = /^(mute|silenciar|unmute|desilenciar)$/i
 handler.group = true
 handler.admin = true
