@@ -3,8 +3,9 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
   let user = texto.length > 0? texto[0] : (m.quoted? await m.quoted.sender : false);
 
   if (!user) {
-    return conn.reply(m.chat, `*⚡ ERROR DE SISTEMA ⚡*
-*━━━━━━━━*
+    return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ ERROR DE SISTEMA ⚠️*
 
 ╭─「 INSTRUCCION 」─╮
 │ *Menciona o cita al usuario*
@@ -19,8 +20,9 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
   const targetName = globalThis.db.data.users[user]?.name || await conn.getName(user)
 
   if (user === m.sender) {
-    return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━*
+    return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⛔ ACCESO DENEGADO ⛔*
 
 ╭─「 SEGURIDAD 」─╮
 │ *No puedes expulsarte a ti mismo*
@@ -28,8 +30,9 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
   }
 
   if (user === conn.user.jid) {
-    return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━*
+    return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⛔ ACCESO DENEGADO ⛔*
 
 ╭─「 SEGURIDAD 」─╮
 │ *No puedo expulsarme a mi mismo*
@@ -37,8 +40,9 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
   }
 
   if (user === ownerGroup) {
-    return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━*
+    return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⛔ ACCESO DENEGADO ⛔*
 
 ╭─「 SEGURIDAD 」─╮
 │ *No se puede expulsar al creador*
@@ -46,8 +50,9 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
   }
 
   if (user === ownerBot || protectedOwners.includes(user)) {
-    return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━*
+    return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⛔ ACCESO DENEGADO ⛔*
 
 ╭─「 SEGURIDAD 」─╮
 │ *No se puede expulsar al owner*
@@ -57,8 +62,9 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
   const participant = groupInfo.participants.find(p => p.jid === user);
 
   if (!participant) {
-    return conn.reply(m.chat, `*⚠️ USUARIO NO ENCONTRADO ⚠️*
-*━━━━━━━━*
+    return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ USUARIO NO ENCONTRADO ⚠️*
 
 ╭─「 ESTADO 」─╮
 │ *${targetName} ya no esta en el grupo*
@@ -67,8 +73,7 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
 
   await conn.groupParticipantsUpdate(m.chat, [user], 'remove');
 
-  await conn.reply(m.chat, `*🔻 EXPULSION EJECUTADA 🔻*
-*━━━━━━━━*
+  await conn.reply(m.chat, `*🍓 EXPULSION EJECUTADA 🍓*
 
 ╭─「 REPORTE 」─╮
 │ *USUARIO*: ${targetName}
@@ -76,7 +81,7 @@ var handler = async (m, { conn, participants, usedPrefix, command }) => {
 │ *POR*: @${m.sender.split('@')[0]}
 ╰───────────────╯
 
-> "La puerta se cerro tras su salida"`, m, { mentions: [m.sender] });
+> "Se fue una fresita del huerto"`, m, { mentions: [m.sender] });
 };
 
 handler.help = ['kick'];
