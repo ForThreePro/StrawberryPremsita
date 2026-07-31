@@ -10,12 +10,11 @@ const handler = async (m, { conn, command }) => {
       null
 
     if (!who) {
-      return conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-❌ 𝗘𝗥𝗢𝗥 𝗗𝗘 𝗦𝗜𝗦𝗧𝗘𝗠𝗔 ❌
-⚡━━━━━━━━━━━━━━━⚡
+      return conn.reply(m.chat, `*⚡ ERROR DE SISTEMA ⚡*
+*━━━━━━━━*
 
-╭─「 𝗜𝗡𝗦𝗧𝗥𝗨𝗖𝗖𝗜𝗢𝗡 」─╮
-│ 𝗠𝗲𝗻𝗰𝗶𝗼𝗻𝗮 𝗼 𝗰𝗶𝘁𝗮 𝗮𝗹 𝘂𝘀𝘂𝗮𝗿𝗶𝗼
+╭─「 INSTRUCCION 」─╮
+│ *Menciona o cita al usuario*
 ╰───────────────────╯`, m)
     }
 
@@ -34,87 +33,79 @@ const handler = async (m, { conn, command }) => {
 
     if (isPromote) {
       if (participant?.admin) {
-        return conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-⚠️ 𝗔𝗩𝗜𝗦𝗢 𝗗𝗘𝗟 𝗦𝗜𝗦𝗧𝗘𝗠𝗔 ⚠️
-⚡━━━━━━━━━━━━━━━⚡
+        return conn.reply(m.chat, `*⚠️ AVISO DEL SISTEMA ⚠️*
+*━━━━━━━━*
 
-╭─「 𝗘𝗦𝗧𝗔𝗗𝗢 」─╮
-│ @${who.split('@')[0]} 𝘆𝗮 𝗲𝘀 𝗮𝗱𝗺𝗶𝗻
+╭─「 ESTADO 」─╮
+│ *@${who.split('@')[0]} ya es administrador*
 ╰───────────────╯`, m, { mentions: [who] })
       }
 
       await conn.groupParticipantsUpdate(m.chat, [who], 'promote')
 
-      return conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-👑 𝗔𝗦𝗖𝗘𝗡𝗦𝗢 𝗘𝗝𝗘𝗖𝗨𝗧𝗔𝗗𝗢 👑
-⚡━━━━━━━━━━━━━━━⚡
+      return conn.reply(m.chat, `*👑 ASCENSO EJECUTADO 👑*
+*━━━━━━━━*
 
-╭─「 𝗥𝗘𝗣𝗢𝗥𝗧𝗘 」─╮
-│ 𝗨𝗦𝗨𝗔𝗥𝗜𝗢: @${who.split('@')[0]}
-│ 𝗡𝗨𝗘𝗩𝗢 𝗥𝗔𝗡𝗚𝗢: 𝗔𝗗𝗠𝗜𝗡𝗜𝗦𝗧𝗥𝗔𝗗𝗢𝗥
-│ 𝗣𝗢𝗥: @${m.sender.split('@')[0]}
+╭─「 REPORTE 」─╮
+│ *USUARIO*: @${who.split('@')[0]}
+│ *NUEVO RANGO*: ADMINISTRADOR
+│ *POR*: @${m.sender.split('@')[0]}
 ╰───────────────╯`, m, { mentions: [who, m.sender] })
     }
 
     // DEMOTE
     if (protectedOwners.includes(who)) {
-      return conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-⛔ 𝗔𝗖𝗘𝗦𝗢 𝗗𝗘𝗡𝗘𝗚𝗔𝗗𝗢 ⛔
-⚡━━━━━━━━━━━━━━━⚡
+      return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
+*━━━━━━━━*
 
-╭─「 𝗦𝗘𝗚𝗨𝗥𝗜𝗗𝗔𝗗 」─╮
-│ 𝗡𝗼 𝘀𝗲 𝗽𝘂𝗲𝗱𝗲 𝗱𝗲𝗴𝗿𝗮𝗱𝗮𝗿 𝗮𝗹 𝗼𝘄𝗻𝗲𝗿
+╭─「 SEGURIDAD 」─╮
+│ *No se puede degradar al owner*
 ╰──────────────────╯`, m)
     }
 
     if (!participant?.admin) {
-      return conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-⚠️ 𝗔𝗩𝗜𝗦𝗢 𝗗𝗘𝗟 𝗦𝗜𝗦𝗧𝗘𝗠𝗔 ⚠️
-⚡━━━━━━━━━━━━━━━⚡
+      return conn.reply(m.chat, `*⚠️ AVISO DEL SISTEMA ⚠️*
+*━━━━━━━━*
 
-╭─「 𝗘𝗦𝗧𝗔𝗗𝗢 」─╮
-│ @${who.split('@')[0]} 𝗻𝗼 𝗲𝘀 𝗮𝗱𝗺𝗶𝗻
+╭─「 ESTADO 」─╮
+│ *@${who.split('@')[0]} no es administrador*
 ╰───────────────╯`, m, { mentions: [who] })
     }
 
     if (who === groupMetadata.owner) {
-      return conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-⛔ 𝗔𝗖𝗖𝗘𝗦𝗢 𝗗𝗘𝗡𝗘𝗚𝗔𝗗𝗢 ⛔
-⚡━━━━━━━━━━━━━━━⚡
+      return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
+*━━━━━━━━*
 
-╭─「 𝗦𝗘𝗚𝗨𝗥𝗜𝗗𝗔𝗗 」─╮
-│ 𝗡𝗼 𝘀𝗲 𝗽𝘂𝗲𝗱𝗲 𝗱𝗲𝗴𝗿𝗮𝗱𝗮𝗿 𝗮𝗹 𝗰𝗿𝗲𝗮𝗱𝗼𝗿
+╭─「 SEGURIDAD 」─╮
+│ *No se puede degradar al creador*
 ╰──────────────────╯`, m)
     }
 
     if (who === conn.user.jid) {
-      return conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-⛔ 𝗔𝗖𝗘𝗦𝗢 𝗗𝗘𝗡𝗘𝗚𝗔𝗗𝗢 ⛔
-⚡━━━━━━━━━━━━━━━⚡
+      return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
+*━━━━━━━━*
 
-╭─「 𝗦𝗘𝗚𝗨𝗥𝗜𝗗𝗔𝗗 」─╮
-│ 𝗡𝗼 𝗽𝘂𝗲𝗱𝗼 𝗱𝗲𝗴𝗿𝗮𝗱𝗮𝗿𝗺𝗲 𝗮 𝗺𝗶 𝗺𝗶𝘀𝗺𝗼
+╭─「 SEGURIDAD 」─╮
+│ *No puedo degradarme a mi mismo*
 ╰──────────────────╯`, m)
     }
 
     await conn.groupParticipantsUpdate(m.chat, [who], 'demote')
 
-    return conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-🔻 𝗗𝗘𝗚𝗥𝗔𝗗𝗔𝗖𝗜𝗢𝗡 𝗘𝗝𝗘𝗖𝗨𝗧𝗔𝗗𝗔 🔻
-⚡━━━━━━━━━━━━━━━⚡
+    return conn.reply(m.chat, `*🔻 DEGRADACION EJECUTADA 🔻*
+*━━━━━━━━*
 
-╭─「 𝗥𝗘𝗣𝗢𝗥𝗧𝗘 」─╮
-│ 𝗨𝗦𝗨𝗔𝗥𝗜𝗢: @${who.split('@')[0]}
-│ 𝗡𝗨𝗘𝗩𝗢 𝗥𝗔𝗡𝗚𝗢: 𝗠𝗜𝗘𝗠𝗕𝗥𝗢
-│ 𝗣𝗢𝗥: @${m.sender.split('@')[0]}
+╭─「 REPORTE 」─╮
+│ *USUARIO*: @${who.split('@')[0]}
+│ *NUEVO RANGO*: MIEMBRO
+│ *POR*: @${m.sender.split('@')[0]}
 ╰───────────────╯`, m, { mentions: [who, m.sender] })
 
   } catch (e) {
-    conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-❌ 𝗘𝗥𝗢𝗥 𝗖𝗥𝗜𝗧𝗜𝗖𝗢 ❌
-⚡━━━━━━━━━━━━━━━⚡
+    conn.reply(m.chat, `*❌ ERROR CRITICO ❌*
+*━━━━━━━━*
 
-╭─「 𝗗𝗘𝗧𝗔𝗟𝗘 」─╮
+╭─「 DETALLE 」─╮
 │ ${e.message}
 ╰───────────────╯`, m)
   }
