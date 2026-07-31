@@ -1,41 +1,39 @@
 const handler = async (m, {conn, isAdmin, groupMetadata }) => {
-  if (isAdmin) return m.reply(`*⚠️ AVISO DEL SISTEMA ⚠️*
-*━━━━━━━━━━━━━━━*
+  if (isAdmin) return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 🐉 ESTADO 」─╮
+*⚠️ AVISO ⚠️*
+
+╭─「 ESTADO 」─╮
 │ *Ya eres administrador*
-│ *Tu ki ya esta al maximo*
-╰───────────────╯`);
+╰──────────────╯`);
 
   try {
     await conn.groupParticipantsUpdate(m.chat, [m.sender], 'promote');
     await m.react('✅')
-    m.reply(`*🌟 ASCENSO CONCEDIDO 🌟*
-*━━━━━━━━━━━━━━━*
+    m.reply(`*🍓 ASCENSO CONCEDIDO 🍓*
 
-╭─「 ⚡ REPORTE 」─╮
+╭─「 REPORTE 」─╮
 │ *USUARIO*: @${m.sender.split('@')[0]}
 │ *NUEVO RANGO*: ADMINISTRADOR
-│ *PODER*: Nivel Super Saiyajin
 │ *POR*: SISTEMA
-╰───────────────╯
+╰──────────────╯
 
-> "Tu ki ha evolucionado. Ahora eres guardian"`, null, { mentions: [m.sender] });
+> "Ahora tienes permisos de admin"`, null, { mentions: [m.sender] });
 
   } catch (e) {
     console.error(e)
-    m.reply(`*❌ ERROR CRITICO ❌*
-*━━━━━━━━━━━━━━━*
+    m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 💥 DETALLE 」─╮
+*❌ ERROR CRITICO ❌*
+
+╭─「 DETALLE 」─╮
 │ *No se pudo dar admin*
-│ *El bot no tiene suficiente poder*
-╰─────────────────╯
+│ *El bot no tiene permisos*
+╰──────────────╯
 
-╭─「 🛡️ SOLUCION 」─╮
+╭─「 SOLUCION 」─╮
 │ *Dale permisos de admin al bot*
-│ *Necesita ki para promover*
-╰─────────────────╯`);
+╰────────────────╯`);
   }
 };
 
