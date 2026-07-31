@@ -18,7 +18,6 @@ export async function before(m, { conn, participants, groupMetadata }) {
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) memberCount++;
     if ([WAMessageStubType.GROUP_PARTICIPANT_REMOVE, WAMessageStubType.GROUP_PARTICIPANT_LEAVE].includes(m.messageStubType)) memberCount--;
 
-    // Emojis random para que cambien
     const EMOJIS = ['🔥','⚡','💥','🐉','🌟','💫','🌙','☄️','🌈','👑','💀','⚔️','🛡️']
     const e1 = EMOJIS[Math.floor(Math.random() * EMOJIS.length)]
     const e2 = EMOJIS[Math.floor(Math.random() * EMOJIS.length)]
@@ -36,26 +35,24 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     const format = (text) => {
         return text
-       .replace('@user', `@${target.split('@')[0]}`)
-       .replace('@name', targetName)
-       .replace('@group', groupMetadata.subject)
-       .replace('@desc', groupMetadata.desc?.toString() || '*Sin descripcion*')
-       .replace('%users', memberCount)
-       .replace('@action', actionText[m.messageStubType] || '')
-       .replace('@date', new Date().toLocaleString('es-PE'));
+      .replace(/@user/g, `@${target.split('@')[0]}`)
+      .replace(/@name/g, targetName)
+      .replace(/@group/g, groupMetadata.subject)
+      .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
+      .replace(/%users/g, memberCount)
+      .replace(/@action/g, actionText[m.messageStubType] || '')
+      .replace(/@date/g, new Date().toLocaleString('es-PE'));
     };
 
-    // DETECTAR SI TIENE FOTO O NO
     let ppUrl;
     try {
         ppUrl = await conn.profilePictureUrl(target, 'image');
     } catch {
-        // Si no tiene foto, usa banner de Goku
-        ppUrl = 'https://files.evogb.win/INtgbw.jpg'
+        ppUrl = 'https://files.evogb.win/INtgbw.jpg' // Banner Goku
     }
 
-    const welcome = format(`
-*${e1} NUEVO GUERRERO DETECTADO ${e1}*
+    // PLANTILLAS DBZ POR DEFECTO
+    const defaultWelcome = `*${e1} NUEVO GUERRERO DETECTADO ${e1}*
 *━━━━━━━━*
 
 *ID*: @name
@@ -69,12 +66,10 @@ export async function before(m, { conn, participants, groupMetadata }) {
 │ *⚠️ Aviso*: Lee las reglas o ban
 ╰───────────────────────╯
 
-> "Bienvenido a la red. No la cagues" ${e1}
-`.trim());
+> "Bienvenido a la red. No la cagues" ${e1}`;
 
-    const bye = format(`
-*${e1} GUERRERO DADO DE BAJA ${e1}*
-*━━━━━━━━━━━━━━━━*
+    const defaultBye = `*${e1} GUERRERO DADO DE BAJA ${e1}*
+*━━━━━━━━*
 
 *ID*: @name
 *GRUPO*: @group
@@ -86,8 +81,10 @@ export async function before(m, { conn, participants, groupMetadata }) {
 │ *🕐 Salida*: @date
 ╰────────────────╯
 
-> "Un soldado menos. El sistema sigue" ${e1}
-`.trim());
+> "Un soldado menos. El sistema sigue" ${e1}`;
+
+    const welcome = format(chat.welcomeText || defaultWelcome);
+    const bye = format(chat.byeText || defaultBye);
 
     const mentions = [target];
     if (actor) mentions.push(actor);
@@ -103,7 +100,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
         await conn.sendMessage(m.chat, {
             image: { url: ppUrl },
             caption: welcome,
-       ...context
+      ...context
         });
     }
 
@@ -111,7 +108,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
         await conn.sendMessage(m.chat, {
             image: { url: ppUrl },
             caption: bye,
-       ...context
+      ...context
         });
     }
 }
