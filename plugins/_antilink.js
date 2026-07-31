@@ -18,19 +18,22 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner, 
             if (m.text.includes(linkThisGroup)) return !0;
         }
 
-        // AVISO DBZ
+        // AVISO STRAWBERRY
         await conn.sendMessage(m.chat, { 
             text: `
-╔═══「 🚨 𝐑𝐀𝐃𝐀𝐑 𝐃𝐄𝐋 𝐃𝐑𝐀𝐆𝐎𝐍 」═══╗
-║
-║ 𝗗𝗘𝗧𝗘𝗖𝗧𝗔𝗗𝗢 : Enlace Enemigo
-║ 𝗚𝗨𝗘𝗥𝗘𝗥𝗢 : ${user}
-║ 𝗘𝗦𝗧𝗔𝗗𝗢 : ⚡ Eliminando Amenaza...
-║
-╚═══════════════════╝
+*🍓 STRAWBERRY PREM 🍓*
 
-> 𝙻𝚘𝚜 𝚎𝚗𝚕𝚊𝚌𝚎𝚜 𝚎𝚡𝚝𝚎𝚛𝚗𝚘𝚜 𝚎𝚜𝚝𝚊𝚗 𝚙𝚛𝚘𝚑𝚒𝚋𝚒𝚍𝚘𝚜
-> 𝙿𝚛𝚘𝚝𝚎𝚐𝚎𝚖𝚘𝚜 𝚎𝚜𝚝𝚎 𝚐𝚛𝚞𝚙𝚘 𝚌𝚘𝚗 𝚎𝚕 𝚙𝚘𝚍𝚎𝚛 𝚍𝚎 𝚂𝚑𝚎𝚗𝚕𝚘𝚗
+*🚨 RADAR DE SEGURIDAD 🚨*
+
+*DETECTADO*: Enlace externo
+*GUERRERO*: ${user}
+*ESTADO*: *Eliminando amenaza*
+
+*── REGLAS ──*
+*Los enlaces externos estan prohibidos*
+*Protegemos este grupo*
+
+> *"Aqui se respeta el huerto de fresas"* 🍓
 `.trim(), 
             mentions: [m.sender] 
         }, { quoted: m });
@@ -39,12 +42,14 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner, 
         if (!isBotAdmin) {
             return conn.sendMessage(m.chat, { 
                 text: `
-╔═══「 ⚠️ 𝐒𝐈𝐒𝐓𝐄𝐌𝐀 𝐁𝐋𝐎𝐐𝐔𝐄𝐀𝐃𝐎 」═══╗
-║
-║ No tengo suficiente ki para eliminar
-║ Activame como Admin para usar mi poder
-║
-╚═══════════╝
+*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ SISTEMA BLOQUEADO ⚠️*
+
+*No tengo permisos para eliminar*
+*Dame admin para activar mi poder*
+
+*MENCION A ADMINS*
 `.trim(), 
                 mentions: groupAdmins.map(v => v.id) 
             }, { quoted: m });
@@ -55,7 +60,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin, isOwner, isROwner, 
             await conn.sendMessage(m.chat, { delete: m.key });
             await conn.groupParticipantsUpdate(m.chat, [m.sender], "remove");
             await conn.sendMessage(m.chat, {
-                text: `🔥 *AMENAZA ELIMINADA* 🔥\n> ${user} fue expulsado del grupo`
+                text: `*🍓 AMENAZA ELIMINADA 🍓*\n> ${user} fue expulsado del grupo`
             }, { mentions: [m.sender] })
         }
     }
