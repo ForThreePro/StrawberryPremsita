@@ -1,24 +1,58 @@
-var handler = async (m, { conn, args }) => {
+var handler = async (m, { conn, participants }) => {
+  const groupInfo = await conn.groupMetadata(m.chat);
+  const ownerGroup = groupInfo.owner || m.chat.split`-`[0] + '@s.whatsapp.net';
+  const ownerBot = globalThis.owner[0][0] + '@s.whatsapp.net';
 
-let group = m.chat
-let link = 'https://chat.whatsapp.com/' + await conn.groupInviteCode(group)
+  let targets = participants
+  .map(p => p.id)
+  .filter(id => id!== conn.user.jid)
+  .filter(id => id!== ownerGroup)
+  .filter(id => id!== ownerBot)
+  .filter(id => {
+      const isAdmin = participants.find(p => p.id === id)?.admin
+      return!isAdmin // No expulsa admins
+    });
 
-conn.reply(m.chat, `⚡━━━━━━━━━━━━━━━⚡
-🔗 𝗘𝗡𝗟𝗔𝗖𝗘 𝗗𝗘𝗟 𝗚𝗥𝗨𝗣𝗢 🔗
-⚡━━━━━━━━━━━━━━━⚡
+  if (!targets.length) {
+    return conn.reply(m.chat, `*⚠️ ADVERTENCIA DEL SISTEMA ⚠️*
+*━━━━━━━━*
 
-╭─「 𝗜𝗡𝗙𝗢 𝗗𝗘𝗟 𝗦𝗜𝗦𝗧𝗘𝗠𝗔 」─╮
-│ 𝗘𝗡𝗟𝗔𝗖𝗘: ${link}
-│ 𝗘𝗦𝗧𝗔𝗗𝗢: 𝗔𝗰𝘁𝗶𝘃𝗼
-╰───────────────────────╯
+╭─「 ESTADO 」─╮
+│ *No hay usuarios validos para expulsar*
+╰───────────────╯`, m);
+  }
 
-> "𝗖𝗼𝗺𝗽𝗮𝗿𝘁𝗲 𝗰𝗼𝗻 𝗰𝘂𝗶𝗱𝗮𝗱𝗼"`, m, { detectLink: true })
+  // Mensaje de advertencia antes de ejecutar
+  await conn.reply(m.chat, `*🔴 EJECUTANDO PROTOCOLO 🔴*
+*━━━━━━━━*
 
-}
-handler.help = ['link']
-handler.tags = ['grupo']
-handler.command = ['link', 'enlace']
+╭─「 KICKALL 」─╮
+│ *OBJETIVOS*: ${targets.length}
+│ *ESTADO*: Eliminando...
+│ *AUTOR*: @${m.sender.split('@')[0]}
+╰───────────────╯
+
+> "Iniciando limpieza del sistema"`, m, { mentions: [m.sender] });
+
+  await conn.groupParticipantsUpdate(m.chat, targets, 'remove');
+
+  await conn.reply(m.chat, `*✅ PROTOCOLO COMPLETADO ✅*
+*━━━━━━━━*
+
+╭─「 REPORTE 」─╮
+│ *EXPULSADOS*: ${targets.length}
+│ *ESTADO*: Grupo limpio
+│ *POR*: @${m.sender.split('@')[0]}
+╰───────────────╯
+
+> "El sistema ha sido purgado"`, m, { mentions: [m.sender] });
+};
+
+handler.help = ['kickall'];
+handler.tags = ['group'];
+handler.command = ['kickall'];
+handler.admin = true;
+handler.botAdmin = true;
 handler.group = true
-handler.botAdmin = true
 
-export default handler
+export default handler;
