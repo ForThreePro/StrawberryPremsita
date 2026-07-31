@@ -6,10 +6,8 @@ const execAsync = promisify(exec)
 
 export async function before(m, { conn, participants, groupMetadata }) {
     if (!m.messageStubType ||!m.isGroup) return true;
-
     const chat = global.db.data.chats[m.chat];
     if (!chat ||!chat.welcome) return true;
-
     const target = m.messageStubParameters?.[0];
     if (!target) return true;
 
@@ -46,39 +44,29 @@ export async function before(m, { conn, participants, groupMetadata }) {
     try { ppUrl = await conn.profilePictureUrl(target, 'image'); }
     catch { ppUrl = 'https://files.evogb.win/INtgbw.jpg' }
 
-    const defaultWelcome = `*${e1} NUEVO GUERRERO DETECTADO ${e1}*\n*━━━━━━━━*\n\n*ID*: @name\n*GRUPO*: @group\n\n*ESTADO*: @action\n╭─「 ${e2} INFO DEL SISTEMA 」─╮\n│ *📜 Desc*: @desc\n│ *👥 Miembros*: %users\n│ *⚠️ Aviso*: Lee las reglas o ban\n╰───────────────────────╯\n\n> "Bienvenido a la red. No la cagues" ${e1}`;
+    const defaultWelcome = `*${e1} NUEVO GUERRERO DETECTADO ${e1}*\n*━━━━━━━━*\n\n*ID*: @name\n*GRUPO*: @group\n*ESTADO*: @action\n╭─「 ${e2} INFO DEL SISTEMA 」─╮\n│ *📜 Desc*: @desc\n│ *👥 Miembros*: %users\n│ *⚠️ Aviso*: Lee las reglas o ban\n╰───────────────────────╯\n\n> "Bienvenido a la red. No la cagues" ${e1}`;
 
     const defaultBye = `*${e1} GUERRERO DADO DE BAJA ${e1}*\n*━━━━━━━━*\n\n*ID*: @name\n*GRUPO*: @group\n\n*ESTADO*: @action\n\n╭─「 ${e2} REPORTE 」─╮\n│ *👥 Miembros Actuales*: %users\n│ *🕐 Salida*: @date\n╰────────────────╯\n\n> "Un soldado menos. El sistema sigue" ${e1}`;
 
     const welcome = format(chat.welcomeText || defaultWelcome);
     const bye = format(chat.byeText || defaultBye);
-
     const mentions = [target];
     if (actor) mentions.push(actor);
     const context = { contextInfo: { mentionedJid: mentions, isForwarded: true } };
 
-    // FUNCION ARREGLADA - MANDA AUDIO COMO BUFFER
+    // FUNCION ARREGLADA: MANDA MP3 MANUAL PARA QUE NO LO SILENCIE
     const sendAudioWelcome = async (audioPath) => {
         if (!fs.existsSync(audioPath)) return console.log('Audio no encontrado:', audioPath)
-
-        let output = audioPath.replace(/\.(mp3|m4a|wav|ogg)$/, '.ogg')
         try {
-            // Convierte a ogg opus
-            await execAsync(`ffmpeg -y -i "${audioPath}" -vn -ar 44100 -ac 2 -b:a 128k -c:a libopus "${output}"`)
-
-            // Lee como buffer y manda - ESTO HACE QUE SI SUENE
-            const audioBuffer = fs.readFileSync(output)
-
+            const audioBuffer = fs.readFileSync(audioPath)
             await conn.sendMessage(m.chat, {
                 audio: audioBuffer,
-                mimetype: 'audio/ogg; codecs=opus',
-                ptt: false, // MANUAL - NO AUTOMATICO
-                fileName: 'Sistema_Audio.ogg'
+                mimetype: 'audio/mpeg', // MP3
+                ptt: false, // MANUAL - CLAVE PARA QUE NO LO SILENCIE
+                fileName: 'Son_Goku_Prem.mp3'
             })
-
-            fs.unlinkSync(output)
         } catch(e) {
-            console.log('Error en audio:', e)
+            console.log('Error al enviar audio:', e)
         }
     }
 
