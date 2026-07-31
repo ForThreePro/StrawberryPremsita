@@ -12,24 +12,26 @@ let handler = async (m, { conn, args, command, isOwner }) => {
   try {
     pp = await conn.profilePictureUrl(m.chat, 'image');
   } catch {
-    pp = 'https://files.evogb.win/INtgbw.jpg'; // default si no hay foto
+    pp = 'https://files.evogb.win/We0JaW.jpg'; // default si no hay foto
   }
 
   const configList = `
-*╭─「 🐉 PANEL DE CONTROL 」─╮*
+*🍓 STRAWBERRY PREM 🍓*
+
+*╭─「 PANEL DE CONTROL 」─╮*
 │
 │ *${chatData.welcome? on : off} Bienvenida*
 │ *${chatData.antiLink? on : off} Anti Enlaces*
-│ *${chatData.economy? on : off} Economia Zeni*
-│ *${chatData.gacha? on : off} Capsulas Gacha*
-│ *${chatData.adminonly? on : off} Modo Dios*
-│ *${chatData.reaction? on : off} Reacciones Ki*
+│ *${chatData.economy? on : off} Economia*
+│ *${chatData.gacha? on : off} Gacha*
+│ *${chatData.adminonly? on : off} Modo Admin*
+│ *${chatData.reaction? on : off} Reacciones*
 │ *${chatData.nsfw? on : off} NSFW*
-│ *${chatData.alerts? on : off} Alerta Peligro*
+│ *${chatData.alerts? on : off} Alertas*
 │ *${chatData.notprefix? on : off} Sin Prefijo*
 │ *${botSettings?.jadibotmd? on : off} SubBots*
 │
-*├─「 ⚡ USO 」─*
+*├─「 USO 」─*
 │ *.${command} welcome on/off*
 │ *.${command} antilink on/off*
 *╰─────────────╯*`.trim();
@@ -46,13 +48,12 @@ let handler = async (m, { conn, args, command, isOwner }) => {
   const reply = (name) => conn.sendMessage(m.chat, {
     image: { url: pp },
     caption: `
-*╭─「 🌟 SISTEMA ACTUALIZADO 」─╮*
-│
-│ *📌 FUNCION*: ${name}
-│ *📊 ESTADO*: ${status? '✅ ACTIVADO' : '❌ DESACTIVADO'}
-│ *⚡ KI*: ${status? 'Nivel Super Saiyajin' : 'Nivel Base'}
-│
-*╰─────────────╯*`.trim(),
+*🍓 SISTEMA ACTUALIZADO 🍓*
+
+╭─「 REPORTE 」─╮
+│ *FUNCION*: ${name}
+│ *ESTADO*: ${status? '✅ ACTIVADO' : '❌ DESACTIVADO'}
+╰──────────────╯`,
     mentions: [m.sender]
   }, { quoted: m });
 
@@ -61,13 +62,13 @@ let handler = async (m, { conn, args, command, isOwner }) => {
       chatData.antiLink = status; reply('Anti Enlaces'); break;
 
     case 'rpg': case 'economia':
-      chatData.rpg = status; chatData.economy = status; reply('Economia Zeni'); break;
+      chatData.rpg = status; chatData.economy = status; reply('Economia'); break;
 
     case 'gacha':
-      chatData.gacha = status; reply('Capsulas Gacha'); break;
+      chatData.gacha = status; reply('Gacha'); break;
 
     case 'modoadmin': case 'adminonly': case 'onlyadmin':
-      chatData.adminonly = status; reply('Modo Dios'); break;
+      chatData.adminonly = status; reply('Modo Admin'); break;
 
     case 'nsfw':
       chatData.nsfw = status; reply('NSFW'); break;
@@ -76,30 +77,45 @@ let handler = async (m, { conn, args, command, isOwner }) => {
       chatData.welcome = status; reply('Bienvenida'); break;
 
     case 'reaccion': case 'reaction':
-      chatData.reaction = status; reply('Reacciones Ki'); break;
+      chatData.reaction = status; reply('Reacciones'); break;
 
     case 'alerts': case 'alertas':
-      chatData.alerts = status; reply('Alerta Peligro'); break;
+      chatData.alerts = status; reply('Alertas'); break;
 
     case 'notprefix': case 'noprefix': case 'sinprefijo':
       chatData.notprefix = status; reply('Sin Prefijo'); break;
 
     case 'serbot': case 'jadibot': case 'subbots':
-      if (!isOwner) return m.reply(`*╭─「 ⛔ ACCESO DENEGADO 」─╮*\n│\n│ *Solo el Maestro puede usar esto*\n│ *Tu ki no es suficiente*\n│\n*╰─────────────╯*`);
+      if (!isOwner) return m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*⛔ ACCESO DENEGADO ⛔*
+
+╭─「 SEGURIDAD 」─╮
+│ *Solo el owner puede usar esto*
+╰────────────────╯`);
       if (botSettings) { botSettings.jadibotmd = status; reply('SubBots'); }
       break;
 
     default:
       return conn.sendMessage(m.chat, {
         image: { url: pp },
-        caption: `*╭─「 ⚠️ ERROR 」─╮*\n│\n│ *Opcion no valida*\n│ *Revisa el Panel de Control*\n│\n*╰─────────────╯*\n\n${configList}`,
+        caption: `*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ ERROR ⚠️*
+
+╭─「 DETALLE 」─╮
+│ *Opcion no valida*
+│ *Revisa el Panel de Control*
+╰──────────────╯
+
+${configList}`,
         mentions: [m.sender]
       }, { quoted: m });
   }
 };
 
 handler.help = ['on', 'off'];
-handler.tags = ['grupo'];
+handler.tags = ['group'];
 handler.command = ['on', 'off'];
 handler.admin = true;
 handler.botAdmin = false;
