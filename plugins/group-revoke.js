@@ -8,46 +8,44 @@ let handler = async (m, { conn }) => {
     const enlaceCompleto = 'https://chat.whatsapp.com/' + nuevoEnlace
 
     await conn.reply(m.sender, 
-`*🌟 PROTOCOLO EJECUTADO 🌟*
-*━━━━━━━━━━━━━━━*
+`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 🛡️ REPORTE DE SEGURIDAD 」─╮
-│ *🔻 ENLACE ANTERIOR*: Revocado
-│ *🔗 NUEVO ENLACE*: ${enlaceCompleto}
-│ *⚡ ESTADO*: Sistema Seguro
-│ *🐉 KI*: Barrera Restaurada
-╰─────────────────────────────╯
+╭─「 REPORTE DE SEGURIDAD 」─╮
+│ *ENLACE ANTERIOR*: Revocado
+│ *NUEVO ENLACE*: ${enlaceCompleto}
+│ *ESTADO*: Grupo Seguro
+╰────────────────────────────╯
 
-> "El acceso anterior ha sido destruido"` , 
+> "El enlace anterior fue destruido"` , 
       m, { detectLink: true })
 
-    await conn.reply(m.chat, `*🔒 ENLACE RESTABLECIDO 🔒*
-*━━━━━━━━━━━━━━━*
+    await conn.reply(m.chat, `*🍓 ENLACE RESTABLECIDO 🍓*
 
-╭─「 ⚠️ ADVERTENCIA 」─╮
+╭─「 ADVERTENCIA 」─╮
 │ *El enlace anterior ya no funciona*
-│ *Solo el nuevo enlace tiene poder*
-│ *Los intrusos fueron bloqueados*
-╰───────────────────╯`, m)
+│ *Solo el nuevo enlace sirve*
+│ *Se bloqueo el acceso viejo*
+╰──────────────────╯`, m)
 
   } catch (error) {
     console.error(error)
-    await m.reply(`*❌ ERROR CRITICO ❌*
-*━━━━━━━━━━━━━━━*
+    await m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 💥 DETALLE 」─╮
+*❌ ERROR CRITICO ❌*
+
+╭─「 DETALLE 」─╮
 │ ${error.message}
-╰─────────────╯
+╰──────────────╯
 
-╭─「 🐉 SOLUCION 」─╮
+╭─「 SOLUCION 」─╮
 │ *Verifica que el bot sea admin*
-│ *Necesita permisos para romper barreras*
-╰─────────────────╯`)
+│ *Necesita permisos para cambiar el enlace*
+╰────────────────╯`)
   }
 }
 
 handler.help = ['revoke']
-handler.tags = ['grupo']
+handler.tags = ['group']
 handler.command = ['revoke', 'restablecer']
 handler.group = true
 handler.admin = true
