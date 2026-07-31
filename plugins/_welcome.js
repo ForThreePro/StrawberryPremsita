@@ -33,13 +33,13 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     const format = (text) => {
         return text
-   .replace(/@user/g, `@${target.split('@')[0]}`)
-   .replace(/@name/g, targetName)
-   .replace(/@group/g, groupMetadata.subject)
-   .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
-   .replace(/%users/g, memberCount)
-   .replace(/@action/g, actionText[m.messageStubType] || '')
-   .replace(/@date/g, new Date().toLocaleString('es-PE'));
+       .replace(/@user/g, `@${target.split('@')[0]}`)
+       .replace(/@name/g, targetName)
+       .replace(/@group/g, groupMetadata.subject)
+       .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
+       .replace(/%users/g, memberCount)
+       .replace(/@action/g, actionText[m.messageStubType] || '')
+       .replace(/@date/g, new Date().toLocaleString('es-PE'));
     };
 
     let ppUrl;
@@ -47,6 +47,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     catch { ppUrl = 'https://files.evogb.win/INtgbw.jpg' }
 
     const defaultWelcome = `*${e1} NUEVO GUERRERO DETECTADO ${e1}*\n*━━━━━━━━*\n\n*ID*: @name\n*GRUPO*: @group\n\n*ESTADO*: @action\n╭─「 ${e2} INFO DEL SISTEMA 」─╮\n│ *📜 Desc*: @desc\n│ *👥 Miembros*: %users\n│ *⚠️ Aviso*: Lee las reglas o ban\n╰───────────────────────╯\n\n> "Bienvenido a la red. No la cagues" ${e1}`;
+
     const defaultBye = `*${e1} GUERRERO DADO DE BAJA ${e1}*\n*━━━━━━━━*\n\n*ID*: @name\n*GRUPO*: @group\n\n*ESTADO*: @action\n\n╭─「 ${e2} REPORTE 」─╮\n│ *👥 Miembros Actuales*: %users\n│ *🕐 Salida*: @date\n╰────────────────╯\n\n> "Un soldado menos. El sistema sigue" ${e1}`;
 
     const welcome = format(chat.welcomeText || defaultWelcome);
@@ -56,20 +57,28 @@ export async function before(m, { conn, participants, groupMetadata }) {
     if (actor) mentions.push(actor);
     const context = { contextInfo: { mentionedJid: mentions, isForwarded: true } };
 
-    // FUNCION PARA CONVERTIR AUDIO
+    // FUNCION ARREGLADA - MANDA AUDIO COMO BUFFER
     const sendAudioWelcome = async (audioPath) => {
-        if (!fs.existsSync(audioPath)) return
-        let output = audioPath.replace('.mp3', '.ogg')
+        if (!fs.existsSync(audioPath)) return console.log('Audio no encontrado:', audioPath)
+
+        let output = audioPath.replace(/\.(mp3|m4a|wav|ogg)$/, '.ogg')
         try {
-            await execAsync(`ffmpeg -i "${audioPath}" -vn -ar 48000 -ac 2 -b:a 64k "${output}"`)
+            // Convierte a ogg opus
+            await execAsync(`ffmpeg -y -i "${audioPath}" -vn -ar 44100 -ac 2 -b:a 128k -c:a libopus "${output}"`)
+
+            // Lee como buffer y manda - ESTO HACE QUE SI SUENE
+            const audioBuffer = fs.readFileSync(output)
+
             await conn.sendMessage(m.chat, {
-                audio: { url: output },
+                audio: audioBuffer,
                 mimetype: 'audio/ogg; codecs=opus',
-                ptt: true
+                ptt: false, // MANUAL - NO AUTOMATICO
+                fileName: 'Sistema_Audio.ogg'
             })
-            fs.unlinkSync(output) // borra el convertido
+
+            fs.unlinkSync(output)
         } catch(e) {
-            console.log(e)
+            console.log('Error en audio:', e)
         }
     }
 
