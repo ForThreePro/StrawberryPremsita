@@ -4,18 +4,19 @@ var handler = async (m, { conn, participants }) => {
   const ownerBot = globalThis.owner[0][0] + '@s.whatsapp.net';
 
   let targets = participants
-  .map(p => p.id)
-  .filter(id => id!== conn.user.jid)
-  .filter(id => id!== ownerGroup)
-  .filter(id => id!== ownerBot)
-  .filter(id => {
+ .map(p => p.id)
+ .filter(id => id!== conn.user.jid)
+ .filter(id => id!== ownerGroup)
+ .filter(id => id!== ownerBot)
+ .filter(id => {
       const isAdmin = participants.find(p => p.id === id)?.admin
       return!isAdmin // No expulsa admins
     });
 
   if (!targets.length) {
-    return conn.reply(m.chat, `*⚠️ ADVERTENCIA DEL SISTEMA ⚠️*
-*━━━━━━━━*
+    return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ ADVERTENCIA ⚠️*
 
 ╭─「 ESTADO 」─╮
 │ *No hay usuarios validos para expulsar*
@@ -23,8 +24,7 @@ var handler = async (m, { conn, participants }) => {
   }
 
   // Mensaje de advertencia antes de ejecutar
-  await conn.reply(m.chat, `*🔴 EJECUTANDO PROTOCOLO 🔴*
-*━━━━━━━━*
+  await conn.reply(m.chat, `*🍓 EJECUTANDO LIMPIEZA 🍓*
 
 ╭─「 KICKALL 」─╮
 │ *OBJETIVOS*: ${targets.length}
@@ -32,20 +32,19 @@ var handler = async (m, { conn, participants }) => {
 │ *AUTOR*: @${m.sender.split('@')[0]}
 ╰───────────────╯
 
-> "Iniciando limpieza del sistema"`, m, { mentions: [m.sender] });
+> "Iniciando limpieza del huerto"`, m, { mentions: [m.sender] });
 
   await conn.groupParticipantsUpdate(m.chat, targets, 'remove');
 
-  await conn.reply(m.chat, `*✅ PROTOCOLO COMPLETADO ✅*
-*━━━━━━━━*
+  await conn.reply(m.chat, `*🍓 LIMPIEZA COMPLETADA 🍓*
 
 ╭─「 REPORTE 」─╮
 │ *EXPULSADOS*: ${targets.length}
-│ *ESTADO*: Grupo limpio
+│ *ESTADO*: Huerto limpio
 │ *POR*: @${m.sender.split('@')[0]}
 ╰───────────────╯
 
-> "El sistema ha sido purgado"`, m, { mentions: [m.sender] });
+> "El huerto ha sido podado"`, m, { mentions: [m.sender] });
 };
 
 handler.help = ['kickall'];
