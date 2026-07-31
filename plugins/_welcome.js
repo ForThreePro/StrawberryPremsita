@@ -40,11 +40,11 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     let ppUrl;
     try { ppUrl = await conn.profilePictureUrl(target, 'image'); }
-    catch { ppUrl = 'https://i.imgur.com/8QZ9mXa.jpg' } // img goku default
+    catch { ppUrl = 'https://i.imgur.com/8QZ9mXa.jpg' }
 
-    const defaultWelcome = `*${e1} NUEVO GUERRERO Z LLEGÓ ${e1}*\n*━━━━━━━━━━━━━━━━━━*\n\n*Nombre*: @name\n*Nivel de Poder*: +9000\n*Grupo*: @group\n*Estado*: @action\n*╭─「 ${e2} RADAR DEL DRAGÓN 」─╮*\n*│* *🐉 Miembros*: %users\n*│* *⚡ Regla*: Entrena o muere\n*╰────────────────────╯*\n\n> "¡Bienvenido a la Tierra! ¡Necesitamos tu poder!" ${e1}`;
+    const defaultWelcome = `*${e1} NUEVO GUERRERO Z LLEGÓ ${e1}*\n*━━━━━━━━━━*\n\n*Nombre*: @name\n*Nivel de Poder*: +9000\n*Grupo*: @group\n*Estado*: @action\n*╭─「 ${e2} RADAR DEL DRAGÓN 」─╮*\n*│* *🐉 Miembros*: %users\n*│* *⚡ Regla*: Entrena o muere\n*╰────────────────────╯*\n\n> "¡Bienvenido a la Tierra!" ${e1}`;
 
-    const defaultBye = `*${e1} UN GUERRERO CAYÓ ${e1}*\n*━━━━━━━━━━━━━━━━━━*\n\n*Nombre*: @name\n*Grupo*: @group\n*Estado*: @action\n\n*╭─「 ${e2} REPORTE 」─╮*\n*│* *🐉 Miembros*: %users\n*╰────────────────────╯*\n\n> "¡Vuelve más fuerte! ¡Te esperamos para la batalla!" ${e1}`;
+    const defaultBye = `*${e1} UN GUERRERO CAYÓ ${e1}*\n*━━━━━━━━━━*\n\n*Nombre*: @name\n*Grupo*: @group\n*Estado*: @action\n\n*╭─「 ${e2} REPORTE 」─╮*\n*│* *🐉 Miembros*: %users\n*╰────────────────────╯*\n\n> "¡Vuelve más fuerte!" ${e1}`;
 
     const welcome = format(chat.welcomeText || defaultWelcome);
     const bye = format(chat.byeText || defaultBye);
@@ -52,28 +52,25 @@ export async function before(m, { conn, participants, groupMetadata }) {
     if (actor) mentions.push(actor);
     const context = { contextInfo: { mentionedJid: mentions, isForwarded: true } };
 
-    // FUNCION AUDIO SIN LIMITE - PODER KAIOKEN
+    // AUDIO MANUAL - SIN AUTOMATICO Y SIN LIMITE
     const sendAudioWelcome = async (audioPath) => {
-        if (!fs.existsSync(audioPath)) return console.log('Audio no encontrado:', audioPath)
+        if (!fs.existsSync(audioPath)) return
         let output = audioPath.replace('.mp3', '.ogg')
         try {
             await execAsync(`ffmpeg -i "${audioPath}" -vn -ar 44100 -ac 2 -b:a 128k "${output}"`)
-
             await conn.sendMessage(m.chat, {
                 audio: { url: output },
                 mimetype: 'audio/ogg; codecs=opus',
-                ptt: false, // SIN LIMITE PARA GRITAR KAMEHAMEHA
+                ptt: false, // MANUAL: toca darle play
                 fileName: 'Son_Goku_Bot.ogg'
             })
             fs.unlinkSync(output)
-        } catch(e) {
-            console.log('Error al convertir audio:', e)
-        }
+        } catch(e) { console.log(e) }
     }
 
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
         await conn.sendMessage(m.chat, { image: { url: ppUrl }, caption: welcome,...context });
-        if (chat.welcomeAudio) await sendAudioWelcome(chat.welcomeAudio)
+        if (chat.welcomeAudio) await sendAudioWelcome(chat.welcomeAudio) // sale después de la imagen
     }
     if ([WAMessageStubType.GROUP_PARTICIPANT_LEAVE, WAMessageStubType.GROUP_PARTICIPANT_REMOVE].includes(m.messageStubType)) {
         await conn.sendMessage(m.chat, { image: { url: ppUrl }, caption: bye,...context });
