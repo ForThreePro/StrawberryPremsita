@@ -5,7 +5,7 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args }) => {
       return;
     }
 
-    const customMessage = args.join(' ') || '⚡ Notificacion del Sistema';
+    const customMessage = args.join(' ') || '🍓 Notificacion del Huerto';
     const groupMetadata = await conn.groupMetadata(m.chat).catch(() => ({ subject: 'Grupo', participants: [] }));
     const groupName = groupMetadata.subject;
 
@@ -20,7 +20,7 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args }) => {
       { prefijo: '57', bandera: '🇨🇴' }, { prefijo: '269', bandera: '🇰🇲' }, { prefijo: '242', bandera: '🇨🇬' }, { prefijo: '506', bandera: '🇨🇷' }, { prefijo: '385', bandera: '🇭🇷' },
       { prefijo: '53', bandera: '🇨🇺' }, { prefijo: '357', bandera: '🇨🇾' }, { prefijo: '420', bandera: '🇨🇿' }, { prefijo: '45', bandera: '🇩🇰' }, { prefijo: '253', bandera: '🇩🇯' },
       { prefijo: '593', bandera: '🇪🇨' }, { prefijo: '20', bandera: '🇪🇬' }, { prefijo: '503', bandera: '🇸🇻' }, { prefijo: '240', bandera: '🇬🇶' }, { prefijo: '291', bandera: '🇪🇷' },
-      { prefijo: '372', bandera: '🇪🇪' }, { prefijo: '268', bandera: '🇸🇿' }, { prefijo: '251', bandera: '🇪🇹' }, { prefijo: '679', bandera: '🇫🇯' }, { prefijo: '358', bandera: '🇫🇮' },
+      { prefijo: '372', bandera: '🇪' }, { prefijo: '268', bandera: '🇸🇿' }, { prefijo: '251', bandera: '🇪🇹' }, { prefijo: '679', bandera: '🇫🇯' }, { prefijo: '358', bandera: '🇫🇮' },
       { prefijo: '33', bandera: '🇫🇷' }, { prefijo: '241', bandera: '🇬🇦' }, { prefijo: '220', bandera: '🇬🇲' }, { prefijo: '995', bandera: '🇬🇪' }, { prefijo: '49', bandera: '🇩🇪' },
       { prefijo: '233', bandera: '🇬🇭' }, { prefijo: '30', bandera: '🇬🇷' }, { prefijo: '502', bandera: '🇬🇹' }, { prefijo: '224', bandera: '🇬🇳' }, { prefijo: '245', bandera: '🇬🇼' },
       { prefijo: '592', bandera: '🇬🇾' }, { prefijo: '509', bandera: '🇭🇹' }, { prefijo: '504', bandera: '🇭🇳' }, { prefijo: '36', bandera: '🇭🇺' }, { prefijo: '354', bandera: '🇮🇸' },
@@ -31,7 +31,7 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args }) => {
       { prefijo: '352', bandera: '🇱🇺' }, { prefijo: '261', bandera: '🇲🇬' }, { prefijo: '265', bandera: '🇲🇼' }, { prefijo: '60', bandera: '🇲🇾' }, { prefijo: '960', bandera: '🇲🇻' },
       { prefijo: '223', bandera: '🇲🇱' }, { prefijo: '356', bandera: '🇲🇹' }, { prefijo: '222', bandera: '🇲🇷' }, { prefijo: '230', bandera: '🇲🇺' }, { prefijo: '52', bandera: '🇲🇽' },
       { prefijo: '373', bandera: '🇲🇩' }, { prefijo: '976', bandera: '🇲🇳' }, { prefijo: '382', bandera: '🇲🇪' }, { prefijo: '212', bandera: '🇲🇦' }, { prefijo: '258', bandera: '🇲🇿' },
-      { prefijo: '95', bandera: '🇲🇲' }, { prefijo: '264', bandera: '🇳🇦' }, { prefijo: '977', bandera: '🇳🇵' }, { prefijo: '31', bandera: '🇳🇱' }, { prefijo: '64', bandera: '🇳🇿' },
+      { prefijo: '95', bandera: '🇲' }, { prefijo: '264', bandera: '🇳🇦' }, { prefijo: '977', bandera: '🇳🇵' }, { prefijo: '31', bandera: '🇳🇱' }, { prefijo: '64', bandera: '🇳🇿' },
       { prefijo: '505', bandera: '🇳🇮' }, { prefijo: '227', bandera: '🇳🇪' }, { prefijo: '234', bandera: '🇳🇬' }, { prefijo: '850', bandera: '🇰🇵' }, { prefijo: '47', bandera: '🇳🇴' },
       { prefijo: '968', bandera: '🇴🇲' }, { prefijo: '92', bandera: '🇵🇰' }, { prefijo: '507', bandera: '🇵🇦' }, { prefijo: '675', bandera: '🇵🇬' }, { prefijo: '595', bandera: '🇵🇾' },
       { prefijo: '51', bandera: '🇵🇪' }, { prefijo: '63', bandera: '🇵🇭' }, { prefijo: '48', bandera: '🇵🇱' }, { prefijo: '351', bandera: '🇵🇹' }, { prefijo: '974', bandera: '🇶🇦' },
@@ -67,21 +67,21 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args }) => {
 
     const orderedFlags = countryFlags.map(c => c.bandera).concat(['🚩']);
 
-    let messageText = `*🔥 INVOCACION DEL DRAGON 🔥*
+    let messageText = `*🍓 STRAWBERRY PREM 🍓*
 
-*╭─「 🐉 NOTIFICACION GENERAL 」─╮*
+*╭─「 NOTIFICACION GENERAL 」─╮*
 │ *GRUPO*: ${groupName}
-*╰───────────────────────╯*
+*╰────────────────────────╯*
 
-*⚡ MENSAJE KI ⚡*
+*MENSAJE*
 *${customMessage}*
 
-> *"Con el poder del Shunkanido los convoco a todos"*
+> *"Convocando a todos del huerto"*
 
-*──🐉 INTEGRANTES ──*
-*👥 Total*: ${participants.length} guerreros
+*── INTEGRANTES ──*
+*TOTAL*: ${participants.length}
 
-*──🌍 LISTA POR NACION ──*
+*── LISTA POR PAIS ──*
 `
 
     for (const flag of orderedFlags) {
@@ -95,15 +95,15 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args }) => {
     }
 
     messageText += `
-*╭─「 🌟 SON GOKU PREM 」─╮*
-│ *Creador*: Whois Yallico
-│ *Version*: 4.0 Super Saiyajin
+*╭─「 STRAWBERRY PREM 」─╮*
+│ *Bot*: Strawberry Prem
+│ *Version*: 1.0
 *╰─────────────────╯*
 
-> *"El ki de todos esta conectado"* ⚡`
+> *"Todos conectados en el huerto"* 🍓`
 
     // TU FOTO
-    const img = 'https://files.evogb.win/UM5fQe.jpg'
+    const img = 'https://files.evogb.win/We0JaW.jpg'
 
     await conn.sendMessage(m.chat, {
       image: { url: img },
@@ -112,14 +112,15 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args }) => {
     }, { quoted: m });
 
   } catch (error) {
-    console.error("[ERROR EN GOKU PREM]:", error);
-    conn.reply(m.chat, `*❌ ERROR CRITICO ❌*
-*━━━━━━━━━━━━━━━*
+    console.error("[ERROR STRAWBERRY PREM]:", error);
+    conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 💥 DETALLE 」─╮
+*❌ ERROR CRITICO ❌*
+
+╭─「 DETALLE 」─╮
 │ *Ocurrio un error al invocar*
 │ *Verifica los permisos*
-╰─────────────╯`, m);
+╰──────────────╯`, m);
   }
 };
 
