@@ -4,7 +4,7 @@ export async function before(m, { conn, participants, groupMetadata }) {
     if (!m.messageStubType ||!m.isGroup) return true;
 
     const chat = global.db.data.chats[m.chat];
-    if (!chat.welcome) return true;
+    if (!chat ||!chat.welcome) return true;
 
     const target = m.messageStubParameters?.[0];
     if (!target) return true;
@@ -35,13 +35,13 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     const format = (text) => {
         return text
-      .replace(/@user/g, `@${target.split('@')[0]}`)
-      .replace(/@name/g, targetName)
-      .replace(/@group/g, groupMetadata.subject)
-      .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
-      .replace(/%users/g, memberCount)
-      .replace(/@action/g, actionText[m.messageStubType] || '')
-      .replace(/@date/g, new Date().toLocaleString('es-PE'));
+     .replace(/@user/g, `@${target.split('@')[0]}`)
+     .replace(/@name/g, targetName)
+     .replace(/@group/g, groupMetadata.subject)
+     .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
+     .replace(/%users/g, memberCount)
+     .replace(/@action/g, actionText[m.messageStubType] || '')
+     .replace(/@date/g, new Date().toLocaleString('es-PE'));
     };
 
     let ppUrl;
@@ -51,7 +51,6 @@ export async function before(m, { conn, participants, groupMetadata }) {
         ppUrl = 'https://files.evogb.win/INtgbw.jpg' // Banner Goku
     }
 
-    // PLANTILLAS DBZ POR DEFECTO
     const defaultWelcome = `*${e1} NUEVO GUERRERO DETECTADO ${e1}*
 *━━━━━━━━*
 
@@ -89,26 +88,12 @@ export async function before(m, { conn, participants, groupMetadata }) {
     const mentions = [target];
     if (actor) mentions.push(actor);
 
-    const context = {
-        contextInfo: {
-            mentionedJid: mentions,
-            isForwarded: true
-        }
-    };
+    const context = { contextInfo: { mentionedJid: mentions, isForwarded: true } };
 
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
-        await conn.sendMessage(m.chat, {
-            image: { url: ppUrl },
-            caption: welcome,
-      ...context
-        });
+        await conn.sendMessage(m.chat, { image: { url: ppUrl }, caption: welcome,...context });
     }
-
     if ([WAMessageStubType.GROUP_PARTICIPANT_LEAVE, WAMessageStubType.GROUP_PARTICIPANT_REMOVE].includes(m.messageStubType)) {
-        await conn.sendMessage(m.chat, {
-            image: { url: ppUrl },
-            caption: bye,
-      ...context
-        });
+        await conn.sendMessage(m.chat, { image: { url: ppUrl }, caption: bye,...context });
     }
 }
