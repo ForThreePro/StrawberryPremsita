@@ -1,10 +1,12 @@
 let handler = async (m, { conn, usedPrefix, command }) => {
 
-if (!m.quoted) return conn.reply(m.chat, `*⚡ ERROR DE SISTEMA ⚡*
+if (!m.quoted) return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ ERROR DE SISTEMA ⚠️*
 
 ╭─「 INSTRUCCION 」─╮
 │ *Cita el mensaje que deseas eliminar*
-╰────────────────╯`, m)
+╰─────────────────╯`, m)
 
 try {
     // Caso 1: Mensaje de otro usuario
@@ -17,11 +19,15 @@ try {
     try {
         let delet = m.quoted.vM.key
         await conn.sendMessage(m.chat, { delete: delet })
-        await conn.sendMessage(m.chat, { react: { text: '💥', key: m.key } })
+        await conn.sendMessage(m.chat, { react: { text: '🍓', key: m.key } })
     } catch {
-        return conn.reply(m.chat, `*❌ FALLO*: No se pudo eliminar el mensaje
+        return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
 
-*Posibles causas*:
+*❌ FALLO ❌*
+
+*No se pudo eliminar el mensaje*
+
+*Posibles causas:*
 *1*. No tengo permisos de admin
 *2*. El mensaje es muy antiguo`, m)
     }
