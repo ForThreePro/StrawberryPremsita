@@ -103,7 +103,7 @@ const handler = async (m, { isOwner, isAdmin, conn, participants, args }) => {
 > *"El ki de todos esta conectado"* ⚡`
 
     // TU FOTO
-    const img = 'https://files.evogb.win/jgBvm8.jpg'
+    const img = 'https://files.evogb.win/UM5fQe.jpg'
 
     await conn.sendMessage(m.chat, {
       image: { url: img },
