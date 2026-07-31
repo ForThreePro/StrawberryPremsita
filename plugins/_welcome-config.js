@@ -8,7 +8,7 @@ const execAsync = promisify(exec)
 const saveAudio = async (m, type) => {
   let q = m.quoted
   let mime = (q.msg || q).mimetype || q.mimetype || ''
-  if (!/audio/.test(mime)) return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮\n│ ⚠️ *ESO NO ES UN AUDIO*\n╰─────────────────🐉`);
+  if (!/audio/.test(mime)) return m.reply(`*🍓 STRAWBERRY PREM 🍓*\n*⚠️ ESO NO ES UN AUDIO*`);
 
   let chat = global.db.data.chats[m.chat] || {}
   let buffer = await q.download()
@@ -19,7 +19,7 @@ const saveAudio = async (m, type) => {
 
   await execAsync(`ffmpeg -y -i "${tempFile}" -vn -ar 44100 -ac 2 -b:a 128k -c:a libmp3lame -id3v2_version 3 -metadata ptt="" "${fileName}"`)
   fs.unlinkSync(tempFile)
-  
+
   chat[`${type}Audio`] = fileName
   global.db.data.chats[m.chat] = chat
   await global.db.write()
@@ -27,92 +27,90 @@ const saveAudio = async (m, type) => {
 }
 
 let handler = async (m, { conn, text, command, isAdmin }) => {
-  if (!isAdmin) return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮\n│ 😡 *SOLO ADMINS*\n╰─────────────────🐉`);
+  if (!isAdmin) return m.reply(`*🍓 STRAWBERRY PREM 🍓*\n*😡 SOLO ADMINS*`);
 
   let chat = global.db.data.chats[m.chat] || {}
-  
+
   switch(command) {
     case 'setwelcome':
-      if (!text) return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
-│ ⚠️ *FALTA TEXTO*
-│
-│ *Ejemplo:*.setwelcome @name llego a @group
-│ *Variables:* @user @name @group @desc %users @action @date
-╰─────────────────🐉`);
+      if (!text) return m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ FALTA TEXTO ⚠️*
+
+*Ejemplo*: .setwelcome @name llego a @group
+*Variables*: @user @name @group @desc %users @action @date`);
       chat.welcomeText = text;
       global.db.data.chats[m.chat] = chat
       await global.db.write()
-      return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
-│ 💥 *BIENVENIDA GUARDADA*
-╰─────────────────🐉
+      return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 𝗣𝗥𝗘𝗩𝗜𝗦𝗨𝗔𝗟𝗜𝗭𝗔𝗖𝗜𝗢𝗡 」─🐉─╮
-│ ${text}
-╰─────────────────🐉
+*💖 BIENVENIDA GUARDADA 💖*
 
-> *"Un nuevo guerrero se acerca"*`);
+*── PREVISUALIZACION ──*
+${text}
+
+> *"Una nueva fresita se unio al huerto"*`);
 
     case 'setbye':
-      if (!text) return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
-│ ⚠️ *FALTA TEXTO*
-│
-│ *Ejemplo:*.setbye @name abandono @group
-│ *Variables:* @user @name @group %users @action @date
-╰─────────────────🐉`);
+      if (!text) return m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ FALTA TEXTO ⚠️*
+
+*Ejemplo*: .setbye @name abandono @group
+*Variables*: @user @name @group %users @action @date`);
       chat.byeText = text;
       global.db.data.chats[m.chat] = chat
       await global.db.write()
-      return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
-│ 💀 *DESPEDIDA GUARDADA*
-╰─────────────────🐉
+      return m.reply(`*🍓 STRAWBERRY PREM 🍓*
 
-╭─「 𝗣𝗥𝗘𝗩𝗜𝗦𝗨𝗔𝗟𝗜𝗭𝗔𝗖𝗜𝗢𝗡 」─🐉─╮
-│ ${text}
-╰─────────────────🐉
+*😢 DESPEDIDA GUARDADA 😢*
 
-> *"Otro guerrero ha caido"*`);
+*── PREVISUALIZACION ──*
+${text}
+
+> *"Otra fresita dejo el huerto"*`);
 
     case 'delwelcome':
       chat.welcomeText = null;
       global.db.data.chats[m.chat] = chat
       await global.db.write()
-      return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
-│ ✅ *BIENVENIDA ELIMINADA*
-│
-│ *Volvio al mensaje DBZ por defecto*
-╰─────────────────🐉`);
+      return m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*✅ BIENVENIDA ELIMINADA ✅*
+
+*Volvio al mensaje fresita por defecto*`);
 
     case 'delbye':
       chat.byeText = null;
       global.db.data.chats[m.chat] = chat
       await global.db.write()
-      return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮
-│ ✅ *DESPEDIDA ELIMINADA*
-│
-│ *Volvio al mensaje DBZ por defecto*
-╰─────────────────🐉`);
+      return m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*✅ DESPEDIDA ELIMINADA ✅*
+
+*Volvio al mensaje fresita por defecto*`);
 
     case 'audiowelcome':
-      if (!m.quoted) return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮\n│ ⚠️ *RESPONDE A UN AUDIO*\n╰─────────────────🐉`);
+      if (!m.quoted) return m.reply(`*🍓 STRAWBERRY PREM 🍓*\n*⚠️ RESPONDE A UN AUDIO*`);
       await saveAudio(m, 'welcome')
-      return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮\n│ 🎵 *AUDIO MP3 GUARDADO*\n│ *Ya no se silenciará en grupos*\n╰─────────────────🐉`);
+      return m.reply(`*🍓 STRAWBERRY PREM 🍓*\n*🎵 AUDIO MP3 GUARDADO*\n*Ya no se silenciara en grupos*`);
 
     case 'audiobye':
-      if (!m.quoted) return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮\n│ ⚠️ *RESPONDE A UN AUDIO*\n╰─────────────────🐉`);
+      if (!m.quoted) return m.reply(`*🍓 STRAWBERRY PREM 🍓*\n*⚠️ RESPONDE A UN AUDIO*`);
       await saveAudio(m, 'bye')
-      return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮\n│ 💀 *AUDIO MP3 GUARDADO*\n│ *Ya no se silenciará en grupos*\n╰─────────────────🐉`);
+      return m.reply(`*🍓 STRAWBERRY PREM 🍓*\n*🎵 AUDIO MP3 GUARDADO*\n*Ya no se silenciara en grupos*`);
 
     case 'delaudiowelcome':
       chat.welcomeAudio = null
       global.db.data.chats[m.chat] = chat
       await global.db.write()
-      return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮\n│ ✅ *AUDIO DE BIENVENIDA ELIMINADO*\n╰─────────────────🐉`);
+      return m.reply(`*🍓 STRAWBERRY PREM 🍓*\n*✅ AUDIO DE BIENVENIDA ELIMINADO*`);
 
     case 'delaudiobye':
       chat.byeAudio = null
       global.db.data.chats[m.chat] = chat
       await global.db.write()
-      return m.reply(`╭─🐉 *『 𝗦𝗢𝗡 𝗚𝗢𝗞𝗨 𝗣𝗥𝗘𝗠 』* 🐉─╮\n│ ✅ *AUDIO DE DESPEDIDA ELIMINADO*\n╰─────────────────🐉`);
+      return m.reply(`*🍓 STRAWBERRY PREM 🍓*\n*✅ AUDIO DE DESPEDIDA ELIMINADO*`);
   }
 }
 
