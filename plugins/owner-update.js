@@ -3,29 +3,18 @@ import { execSync } from 'child_process'
 var handler = async (m, { conn, text }) => {
 
 try {
-const stdout = execSync('git pull' + (m.fromMe && text ? ' + text : ''));
+
+const stdout = execSync('git pull' + (m.fromMe && text ? ' ' + text : ''));
 let messager = stdout.toString()
 
-if (messager.includes('Already up to date')) messager = `*🌟 ACTUALIZACION COMPLETA 🌟*
-*━━━━━━━━━━━━━━━*
+if (messager.includes('《✧》 Ya estoy actualizada.')) messager = '《✧》 Ya estoy actualizada a la última versión.'
 
-╭─「 🐉 ESTADO 」─╮
-│ *Ya estoy actualizada*
-│ *Nivel de poder: Maximo*
-╰───────────────╯`
-
-if (messager.includes('Updating')) messager = `*⚡ ACTUALIZANDO PODER ⚡*
-*━━━━━━━━━━━━━━━*
-
-╭─「 🔥 PROCESO 」─╮
-│ *Absorbiendo nuevo ki*
-│ *Espera mientras me transformo*
-╰────────────────╯\n\n${stdout.toString()}`
-
+if (messager.includes('ⴵ Actualizando.')) messager = 'ⴵ Procesando, espere un momento mientras me actualizo.\n\n' + stdout.toString()
 conn.reply(m.chat, messager, m)
 
 } catch { 
 try {
+
 const status = execSync('git status --porcelain')
 
 if (status.length > 0) {
@@ -35,28 +24,20 @@ return null
 }
 return '*→ ' + line.slice(3) + '*'}).filter(Boolean)
 if (conflictedFiles.length > 0) {
-const errorMessage = `*❌ ERROR CRITICO ❌*
-*━━━━━━━━━━━━━━━*
-
-╭─「 💥 CONFLICTO KI 」─╮
-│ *No se puede actualizar*
-│ *Hay archivos en conflicto*
-│ ${conflictedFiles.join('\n│ ')}
-╰───────────────────╯`
+const errorMessage = `❏ No se puede actualizar.`
 await conn.reply(m.chat, errorMessage, m)
 }
 }
 } catch (error) {
 console.error(error)
-let errorMessage2 = `*❌ FALLO EN LA ACTUALIZACION ❌*
-*━━━━━━━━━━━━━━━*
-
-╭─「 ⚠️ DETALLE 」─╮
-│ *Ocurrio un error inesperado*
-│ *Mensaje*: ${error.message}
-╰─────────────────╯`
+let errorMessage2 = '❏ Ocurrió un error inesperado.'
+if (error.message) {
+errorMessage2 += '\n❏ Mensaje de error: ' + error.message;
+}
 await conn.reply(m.chat, errorMessage2, m)
 }
+}
+
 }
 
 handler.help = ['update'];
