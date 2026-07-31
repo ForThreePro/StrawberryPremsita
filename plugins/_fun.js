@@ -1,11 +1,11 @@
 let handler = async (m, { conn, command, text }) => {
-    if(!m.isGroup) return m.reply('*⚡ Solo funciona en grupos*')
+    if(!m.isGroup) return m.reply('*🍓 Solo funciona en grupos 🍓*')
 
     let metadata = await conn.groupMetadata(m.chat)
     let users = metadata.participants.map(u => u.id)
     let porcentaje = Math.floor(Math.random() * 101)
 
-    const BOX_TOP = `*🔥 RADAR DEL DRAGON 🔥*`
+    const BOX_TOP = `*🍓 STRAWBERRY PREM 🍓*`
     const BOX_BOT = `*SISTEMA ACTIVO*`
 
     const frasesDuo = ["Somos el duo perfecto 😎","Juntos somos un peligro ⚠️","El duo que rompe grupos 💥","Duo de chisme nivel dios ☕","Dinamita pura 🧨","El mejor duo del server 👑"]
@@ -41,13 +41,13 @@ let handler = async (m, { conn, command, text }) => {
     }
 
     if(!target &&!['2p2','3p3','duo'].includes(command.toLowerCase()))
-        return m.reply(`*⚠️ ERROR ⚠️*
+        return m.reply(`*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ ERROR ⚠️*
 
 *USO*:.${command} @tag
 *EJEMPLO*:.${command} @Juan
-*ALT*: Responde +.${command}
-
-*SON GOKU PREM*`)
+*ALT*: Responde +.${command}`)
 
     let cmd = command.toLowerCase().replace(' ','') // quita espacios
 
@@ -143,7 +143,7 @@ ${BOX_BOT}`
 
         // ========== GRUPALES RANDOM ==========
         case '2p2': // 4 PERSONAS = 2 PAREJAS
-            if(users.length < 4) return m.reply('*⚡ Minimo 4 personas en el grupo*')
+            if(users.length < 4) return m.reply('*🍓 Minimo 4 personas en el grupo 🍓*')
             let cuatro = getRandomUsers(4)
             mentions = cuatro
             txt = `${BOX_TOP}
@@ -159,7 +159,7 @@ ${BOX_BOT}`
             break
 
         case '3p3': // 6 PERSONAS = 3 PAREJAS
-            if(users.length < 6) return m.reply('*⚡ Minimo 6 personas en el grupo*')
+            if(users.length < 6) return m.reply('*🍓 Minimo 6 personas en el grupo 🍓*')
             let seis = getRandomUsers(6)
             mentions = seis
             txt = `${BOX_TOP}
@@ -176,7 +176,7 @@ ${BOX_BOT}`
             break
 
         case 'duo': // 2 PERSONAS = 1 PAREJA
-            if(users.length < 2) return m.reply('*⚡ Minimo 2 personas en el grupo*')
+            if(users.length < 2) return m.reply('*🍓 Minimo 2 personas en el grupo 🍓*')
             let dos = getRandomUsers(2)
             mentions = dos
             let frase = frasesDuo[Math.floor(Math.random() * frasesDuo.length)]
