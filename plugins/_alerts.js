@@ -30,42 +30,44 @@ handler.before = async function (m, { conn }) {
         }
     }
 
-    // IMAGEN DBZ FIJA
-    let banner = 'https://files.evogb.win/INtgbw.jpg'
+    // IMAGEN FRESITA FIJA
+    let banner = 'https://files.evogb.win/We0JaW.jpg'
 
-    // DISEÑO DBZ PROMOTE
+    // DISEÑO STRAWBERRY PROMOTE
     const admingp = `
-╔═══「 🔥 𝐓𝐑𝐀𝐍𝐒𝐅𝐎𝐑𝐌𝐀𝐂𝐈𝐎𝐍 」═══╗
-║
-║ 𝗚𝗨𝗘𝗥𝗥𝗘𝗥𝗢 : ${userTag}
-║ 𝗘𝗦𝗧𝗔𝗗𝗢 : ⚡ SUPER SAIYAJIN
-║ 𝗢𝗧𝗢𝗥𝗚𝗔𝗗𝗢 𝗣𝗢𝗥 : ${adminTag}
-║
-╠═══「 𝗣𝗢𝗗𝗘𝗥𝗘𝗦 𝗗𝗘𝗦𝗕𝗟𝗢𝗤𝗨𝗘𝗔𝗗𝗢𝗦 」═══╣
-║ [✓] Expulsar / Promover
-║ [✓] Editar Info Grupo
-║ [✓] Cambiar Config
-║ [✓] Modo Anuncios
-╚══════════════════════╝
+*🍓 STRAWBERRY PREM 🍓*
 
-> 𝙲𝚘𝚗 𝚐𝚛𝚊𝚗 𝚙𝚘𝚍𝚎𝚛 𝚟𝚒𝚎𝚗𝚎 𝚐𝚛𝚊𝚗 𝚛𝚎𝚜𝚙𝚘𝚗𝚜𝚊𝚋𝚒𝚕𝚒𝚍𝚊𝚍 💥
+*👑 ASCENSO A ADMIN 👑*
+
+*GUERRERO*: ${userTag}
+*ESTADO*: *ADMIN ACTIVADO*
+*OTORGADO POR*: ${adminTag}
+
+*── PODERES NUEVOS ──*
+*[✓]* Expulsar miembros
+*[✓]* Promover/Degradar
+*[✓]* Editar info del grupo
+*[✓]* Cambiar configuracion
+
+> *"Con gran poder viene gran responsabilidad"* 🍓
 `.trim()
 
-    // DISEÑO DBZ DEMOTE
+    // DISEÑO STRAWBERRY DEMOTE
     const noadmingp = `
-╔═══「 ❄️ 𝐏𝐎𝐃𝐄𝐑 𝐑𝐄𝐕𝐎𝐂𝐀𝐃𝐎 」═══╗
-║
-║ 𝗚𝗨𝗘𝗥𝗥𝗘𝗥𝗢 : ${userTag}
-║ 𝗘𝗦𝗧𝗔𝗗𝗢 : 🔒 RANGO REVOCADO
-║ 𝗣𝗢𝗥 : ${adminTag}
-║
-╠═══「 𝗔𝗖𝗘𝗦𝗢 𝗕𝗟𝗢𝗤𝗨𝗘𝗔𝗗𝗢 」═══╣
-║ [✗] Sin permisos de admin
-║ [✗] Comandos bloqueados
-║ [✗] Nivel: Guerrero Z
-╚══════════════╝
+*🍓 STRAWBERRY PREM 🍓*
 
-> 𝚂𝚒𝚗 𝚊𝚞𝚛𝚊, 𝚜𝚒𝚗 𝚙𝚘𝚍𝚎𝚛 ⚡
+*❌ PODER REVOCADO ❌*
+
+*GUERRERO*: ${userTag}
+*ESTADO*: *RANGO REVOCADO*
+*POR*: ${adminTag}
+
+*── ACCESO BLOQUEADO ──*
+*[✗]* Sin permisos de admin
+*[✗]* Comandos de admin bloqueados
+*[✗]* Nivel: Miembro
+
+> *"Sin corona, sin poder"* 🍓
 `.trim()
 
     // LIMPIAR SESSION SI KICKEAN BOT
@@ -86,7 +88,7 @@ handler.before = async function (m, { conn }) {
         await conn.sendMessage(m.chat, {
             image: { url: banner },
             caption: admingp,
-      ...context
+     ...context
         }, { quoted: null })
         return
     }
@@ -96,7 +98,7 @@ handler.before = async function (m, { conn }) {
         await conn.sendMessage(m.chat, {
             image: { url: banner },
             caption: noadmingp,
-      ...context
+     ...context
         }, { quoted: null })
         return
     }
