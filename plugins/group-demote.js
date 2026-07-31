@@ -10,8 +10,9 @@ const handler = async (m, { conn, command }) => {
       null
 
     if (!who) {
-      return conn.reply(m.chat, `*⚡ ERROR DE SISTEMA ⚡*
-*━━━━━━━━*
+      return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ ERROR DE SISTEMA ⚠️*
 
 ╭─「 INSTRUCCION 」─╮
 │ *Menciona o cita al usuario*
@@ -33,8 +34,9 @@ const handler = async (m, { conn, command }) => {
 
     if (isPromote) {
       if (participant?.admin) {
-        return conn.reply(m.chat, `*⚠️ AVISO DEL SISTEMA ⚠️*
-*━━━━━━━━*
+        return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ AVISO ⚠️*
 
 ╭─「 ESTADO 」─╮
 │ *@${who.split('@')[0]} ya es administrador*
@@ -43,8 +45,7 @@ const handler = async (m, { conn, command }) => {
 
       await conn.groupParticipantsUpdate(m.chat, [who], 'promote')
 
-      return conn.reply(m.chat, `*👑 ASCENSO EJECUTADO 👑*
-*━━━━━━━━*
+      return conn.reply(m.chat, `*🍓 ASCENSO EJECUTADO 🍓*
 
 ╭─「 REPORTE 」─╮
 │ *USUARIO*: @${who.split('@')[0]}
@@ -55,8 +56,9 @@ const handler = async (m, { conn, command }) => {
 
     // DEMOTE
     if (protectedOwners.includes(who)) {
-      return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━*
+      return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⛔ ACCESO DENEGADO ⛔*
 
 ╭─「 SEGURIDAD 」─╮
 │ *No se puede degradar al owner*
@@ -64,8 +66,9 @@ const handler = async (m, { conn, command }) => {
     }
 
     if (!participant?.admin) {
-      return conn.reply(m.chat, `*⚠️ AVISO DEL SISTEMA ⚠️*
-*━━━━━━━━*
+      return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⚠️ AVISO ⚠️*
 
 ╭─「 ESTADO 」─╮
 │ *@${who.split('@')[0]} no es administrador*
@@ -73,8 +76,9 @@ const handler = async (m, { conn, command }) => {
     }
 
     if (who === groupMetadata.owner) {
-      return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━*
+      return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⛔ ACCESO DENEGADO ⛔*
 
 ╭─「 SEGURIDAD 」─╮
 │ *No se puede degradar al creador*
@@ -82,8 +86,9 @@ const handler = async (m, { conn, command }) => {
     }
 
     if (who === conn.user.jid) {
-      return conn.reply(m.chat, `*⛔ ACCESO DENEGADO ⛔*
-*━━━━━━━━*
+      return conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*⛔ ACCESO DENEGADO ⛔*
 
 ╭─「 SEGURIDAD 」─╮
 │ *No puedo degradarme a mi mismo*
@@ -92,8 +97,7 @@ const handler = async (m, { conn, command }) => {
 
     await conn.groupParticipantsUpdate(m.chat, [who], 'demote')
 
-    return conn.reply(m.chat, `*🔻 DEGRADACION EJECUTADA 🔻*
-*━━━━━━━━*
+    return conn.reply(m.chat, `*🍓 DEGRADACION EJECUTADA 🍓*
 
 ╭─「 REPORTE 」─╮
 │ *USUARIO*: @${who.split('@')[0]}
@@ -102,8 +106,9 @@ const handler = async (m, { conn, command }) => {
 ╰───────────────╯`, m, { mentions: [who, m.sender] })
 
   } catch (e) {
-    conn.reply(m.chat, `*❌ ERROR CRITICO ❌*
-*━━━━━━━━*
+    conn.reply(m.chat, `*🍓 STRAWBERRY PREM 🍓*
+
+*❌ ERROR CRITICO ❌*
 
 ╭─「 DETALLE 」─╮
 │ ${e.message}
