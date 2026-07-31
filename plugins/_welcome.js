@@ -1,5 +1,8 @@
 import { WAMessageStubType } from '@whiskeysockets/baileys';
 import fs from 'fs'
+import { exec } from 'child_process'
+import { promisify } from 'util'
+const execAsync = promisify(exec)
 
 export async function before(m, { conn, participants, groupMetadata }) {
     if (!m.messageStubType ||!m.isGroup) return true;
@@ -30,13 +33,13 @@ export async function before(m, { conn, participants, groupMetadata }) {
 
     const format = (text) => {
         return text
-    .replace(/@user/g, `@${target.split('@')[0]}`)
-    .replace(/@name/g, targetName)
-    .replace(/@group/g, groupMetadata.subject)
-    .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
-    .replace(/%users/g, memberCount)
-    .replace(/@action/g, actionText[m.messageStubType] || '')
-    .replace(/@date/g, new Date().toLocaleString('es-PE'));
+   .replace(/@user/g, `@${target.split('@')[0]}`)
+   .replace(/@name/g, targetName)
+   .replace(/@group/g, groupMetadata.subject)
+   .replace(/@desc/g, groupMetadata.desc?.toString() || '*Sin descripcion*')
+   .replace(/%users/g, memberCount)
+   .replace(/@action/g, actionText[m.messageStubType] || '')
+   .replace(/@date/g, new Date().toLocaleString('es-PE'));
     };
 
     let ppUrl;
@@ -53,16 +56,29 @@ export async function before(m, { conn, participants, groupMetadata }) {
     if (actor) mentions.push(actor);
     const context = { contextInfo: { mentionedJid: mentions, isForwarded: true } };
 
+    // FUNCION PARA CONVERTIR AUDIO
+    const sendAudioWelcome = async (audioPath) => {
+        if (!fs.existsSync(audioPath)) return
+        let output = audioPath.replace('.mp3', '.ogg')
+        try {
+            await execAsync(`ffmpeg -i "${audioPath}" -vn -ar 48000 -ac 2 -b:a 64k "${output}"`)
+            await conn.sendMessage(m.chat, {
+                audio: { url: output },
+                mimetype: 'audio/ogg; codecs=opus',
+                ptt: true
+            })
+            fs.unlinkSync(output) // borra el convertido
+        } catch(e) {
+            console.log(e)
+        }
+    }
+
     if (m.messageStubType === WAMessageStubType.GROUP_PARTICIPANT_ADD) {
         await conn.sendMessage(m.chat, { image: { url: ppUrl }, caption: welcome,...context });
-        if (chat.welcomeAudio && fs.existsSync(chat.welcomeAudio)) {
-            await conn.sendMessage(m.chat, { audio: { url: chat.welcomeAudio }, mimetype: 'audio/mpeg', ptt: true })
-        }
+        if (chat.welcomeAudio) await sendAudioWelcome(chat.welcomeAudio)
     }
     if ([WAMessageStubType.GROUP_PARTICIPANT_LEAVE, WAMessageStubType.GROUP_PARTICIPANT_REMOVE].includes(m.messageStubType)) {
         await conn.sendMessage(m.chat, { image: { url: ppUrl }, caption: bye,...context });
-        if (chat.byeAudio && fs.existsSync(chat.byeAudio)) {
-            await conn.sendMessage(m.chat, { audio: { url: chat.byeAudio }, mimetype: 'audio/mpeg', ptt: true })
-        }
+        if (chat.byeAudio) await sendAudioWelcome(chat.byeAudio)
     }
 }
