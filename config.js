@@ -6,7 +6,7 @@ global.botNumber = ""
 
 global.owner = [
   ["51927174369", "Carlos 👑", true],
-  ["17054102764", "Canada", true],
+  ["573215829404", "Canada", true],
   ["5363870693", "XxX", true]
 ]
 
